@@ -20,7 +20,7 @@ Setting up Vagrant
 Using Vagrant
 -------------
 
-Run the command "vagrant up" in the root directory of
+Run the command `vagrant up` in the root directory of
 this project (where the the Vagrantfile exists). The
 first time you do this, a Vagrant .box file will be
 downloaded from the internet. This .box file is a
@@ -48,3 +48,22 @@ http://192.168.33.10/test-page.php
 
 If everything is up you should see a simple page with
 the message "vagrant up yours" displayed on it.
+
+Errors
+------
+If you receive an error like the following:
+
+```
+[default] The guest additions on this VM do not match the installed version of
+VirtualBox! In most cases this is fine, but in rare cases it can
+cause things such as shared folders to not work properly. If you see
+shared folder errors, please update the guest additions within the
+virtual machine and reload your VM.
+
+Guest Additions Version: 4.2.0
+VirtualBox Version: 4.1
+```
+
+Execute the following command `vagrant plugin install vagrant-vbguest`
+This will synch the version of Guest Additions on the VM to match
+the version of VirtualBox installed on your host machine.
