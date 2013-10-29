@@ -6,6 +6,10 @@ package { "php5":
     require => Exec["apt-get update"],
 }
 
+package { "php5-xdebug":
+    require => Package["php5"]
+}
+
 file { "/vagrant":
     ensure => "directory",
 }
