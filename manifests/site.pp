@@ -6,11 +6,16 @@ package { "php5":
     require => Exec["apt-get update"],
 }
 
+file { "/vagrant":
+    ensure => "directory",
+}
+
 file { "/var/www":
     ensure => link,
     target => "/vagrant",
     force => true,
     recurse => true,
+    subscribe => File["/vagrant"],
 }
 
 file { "/usr/local/bin/phpunit":
