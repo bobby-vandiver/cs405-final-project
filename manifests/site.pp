@@ -1,29 +1,29 @@
-exec { "apt-get update":
-    command => "/usr/bin/apt-get update",
+exec { 'apt-get update':
+    command => '/usr/bin/apt-get update',
 }
 
-package { "php5":
-    require => Exec["apt-get update"],
+package { 'php5':
+    require => Exec['apt-get update'],
 }
 
-package { "php5-xdebug":
-    require => Package["php5"]
+package { 'php5-xdebug':
+    require => Package['php5']
 }
 
-file { "/vagrant":
-    ensure => "directory",
+file { '/vagrant':
+    ensure => 'directory',
 }
 
-file { "/var/www":
+file { '/var/www':
     ensure => link,
-    target => "/vagrant",
+    target => '/vagrant',
     force => true,
     recurse => true,
-    subscribe => File["/vagrant"],
+    subscribe => File['/vagrant'],
 }
 
-file { "/usr/local/bin/phpunit":
+file { '/usr/local/bin/phpunit':
     ensure => link,
-    target => "/vagrant/lib/phpunit.phar",
+    target => '/vagrant/lib/phpunit.phar',
     force => true,
 }
