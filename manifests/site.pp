@@ -77,3 +77,24 @@ file { '/etc/mysql/my.cnf':
     require => Exec['/vagrant/mysql-config.sh'],
     source => 'file:///vagrant/my.cnf',
 }
+
+#########################
+# Interop dependencies  #
+#########################
+
+package { 'libapache2-mod-auth-mysql':
+    ensure => installed,
+    require => [
+        Package['apache2'],
+        Package['mysql-server'],
+    ],
+}
+
+package { 'php5-mysql':
+    ensure => installed,
+    require => [
+        Package['php5'],
+        Package['mysql-server'],
+    ],
+}
+
