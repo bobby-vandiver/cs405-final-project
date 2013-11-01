@@ -11,7 +11,7 @@ allow you to deploy and configure a virtual machine (VM).
 Setting up Vagrant
 ------------------
 
-1. Install VirtualBox 4.2
+1. Install VirtualBox 4.2.0
    https://www.virtualbox.org/
 
 2. Install Vagrant version 1.3.5
