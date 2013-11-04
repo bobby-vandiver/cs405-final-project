@@ -67,3 +67,11 @@ VirtualBox Version: 4.1
 Execute the following command `vagrant plugin install vagrant-vbguest`
 This will synch the version of Guest Additions on the VM to match
 the version of VirtualBox installed on your host machine.
+
+Connecting to the Database
+--------------------------
+
+The database provided by the Vagrant box can be accessed via
+localhost (127.0.0.1) on port 33066. The user name is 'root'
+and the password is 'mysql'. The default database that is
+created is named 'test'.
