@@ -79,6 +79,23 @@ file { '/etc/mysql/my.cnf':
     source => 'file:///vagrant/my.cnf',
 }
 
+file { 'create-tables.sql': 
+    path => '/vagrant/sql-queries/create-tables.sql',
+    ensure => present,
+}
+
+file { '/vagrant/mysql-bootstrap.sh':
+    ensure => present,
+    require => File['create-tables.sql'],
+}
+
+exec { '/vagrant/mysql-bootstrap.sh':
+    require => [
+            File['/vagrant/mysql-bootstrap.sh'],
+            Exec['/vagrant/mysql-config.sh'],
+        ],
+}
+
 #########################
 # Interop dependencies  #
 #########################
