@@ -42,6 +42,7 @@ package { 'libapache2-mod-php5':
 
 package { 'php5-xdebug':
     ensure => installed,
+    require => Package['php5'],
 }
 
 ##########################
