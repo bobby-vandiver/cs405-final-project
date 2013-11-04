@@ -12,6 +12,11 @@ CREATE TABLE Users (
     PRIMARY KEY (username)
 );
 
+/*
+    status:
+        0 = pending
+        1 = shipped
+*/
 CREATE TABLE Orders (
     orderId         INT         NOT NULL,
     status          INT,
@@ -23,6 +28,11 @@ CREATE TABLE Orders (
     FOREIGN KEY (username) REFERENCES Users(username)
 );
 
+/*
+    type:
+        0 = toy
+        1 = game
+*/
 CREATE TABLE Items (
     isbn            CHAR(10)    NOT NULL,
     quantity        INT,
