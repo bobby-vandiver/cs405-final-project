@@ -16,7 +16,7 @@
     // the only script that talks to the database
     function execute_query($connection, $sql) {
         if($connection) {
-            printf("sql: %s\n", $sql);
+            printf("sql: %s</br>", $sql);
             return mysqli_query($connection, $sql);
         }
     }

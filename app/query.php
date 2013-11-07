@@ -41,8 +41,13 @@
     }
 
     function valid_password($username, $password) {
-        $password_sql = "";
-        execute_query($password_sql);
+        $connection = create_connection();
+        $username = mysqli_real_escape_string($connection, $username);
+        $password = mysqli_real_escape_string($connection, $password);
+
+        $password_sql = "SELECT * FROM Users WHERE username = '$username' AND password = '$password'";
+        $rows = execute_query($connection, $password_sql);
+        return mysqli_num_rows($rows) == 1;
     }
 
     function get_role($username) {
