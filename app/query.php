@@ -16,8 +16,9 @@
     }
     
     function user_exists($username) {
-        $user_exists_sql = "";
-        execute_query($create_user_sql);
+        $user_exists_sql = "SELECT * FROM Users WHERE username = $username";
+        $rows = execute_query($create_user_sql);
+        return count($rows) > 0;
     }
 
     function valid_password($username, $password) {
