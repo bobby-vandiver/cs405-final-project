@@ -2,14 +2,14 @@ USE test;
 
 CREATE TABLE Users (
     username        VARCHAR(50)     NOT NULL,
-    password        VARCHAR(50),
-    role            INT,
+    password        VARCHAR(50)     NOT NULL,
+    role            INT             NOT NULL,
 
-    houseNumber     INT,
-    street          VARCHAR(50),
-    city            VARCHAR(50),
-    state           CHAR(2),
-    zip             CHAR(5),
+    houseNumber     INT             NOT NULL,
+    street          VARCHAR(50)     NOT NULL,
+    city            VARCHAR(50)     NOT NULL,
+    state           CHAR(2)         NOT NULL,
+    zip             CHAR(5)         NOT NULL,
 
     PRIMARY KEY (username)
 );
@@ -20,11 +20,11 @@ CREATE TABLE Users (
         1 = shipped
 */
 CREATE TABLE Orders (
-    orderId         INT         NOT NULL,
-    status          INT,
-    time            TIMESTAMP,
-    total           DECIMAL(10, 2),
-    username        VARCHAR(50) NOT NULL,
+    orderId         INT             NOT NULL,
+    status          INT             NOT NULL,
+    time            TIMESTAMP       NOT NULL,
+    total           DECIMAL(10, 2)  NOT NULL,
+    username        VARCHAR(50)     NOT NULL,
 
     PRIMARY KEY (orderId),
     FOREIGN KEY (username) REFERENCES Users(username)
@@ -36,21 +36,21 @@ CREATE TABLE Orders (
         1 = game
 */
 CREATE TABLE Items (
-    isbn            CHAR(10)    NOT NULL,
-    quantity        INT,
-    price           DECIMAL(10, 2),
-    type            INT,
-    name            VARCHAR(50),
-    promotion       REAL,
+    isbn            CHAR(10)        NOT NULL,
+    quantity        INT             NOT NULL,
+    price           DECIMAL(10, 2)  NOT NULL,
+    type            INT             NOT NULL,
+    name            VARCHAR(50)     NOT NULL,
+    promotion       REAL            NOT NULL,
 
     PRIMARY KEY (isbn)
 );
 
 CREATE TABLE OrderItems (
-    orderId         INT         NOT NULL,
-    isbn            CHAR(10)    NOT NULL,
-    quantity        INT,
-    salePrice       DECIMAL(10, 2),
+    orderId         INT             NOT NULL,
+    isbn            CHAR(10)        NOT NULL,
+    quantity        INT             NOT NULL,
+    salePrice       DECIMAL(10, 2)  NOT NULL,
     
     PRIMARY KEY (orderId, isbn),
     FOREIGN KEY (orderId) REFERENCES Orders(orderId),
@@ -60,7 +60,7 @@ CREATE TABLE OrderItems (
 CREATE TABLE BrowsingHistory (
     username        VARCHAR(50)     NOT NULL,
     isbn            CHAR(10)        NOT NULL,
-    views           INT,
+    views           INT             NOT NULL,
 
     PRIMARY KEY (username, isbn),
     FOREIGN KEY (username) REFERENCES Users(username),
