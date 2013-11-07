@@ -11,8 +11,12 @@
     // ====================
 
     function create_user($username, $password, $role, $houseNumber, $street, $city, $state, $zip) {
-        $create_user_sql = "";
-        execute_query($create_user_sql);
+        if(!user_exists($username)) {
+            $create_user_sql =
+                "INSERT INTO Users(username, password, role, houseNumber, street, city, state, zip)
+                 VALUES ($username, $password, $role, $houseNumber, $street, $city, $state, $zip)";
+            execute_query($create_user_sql);
+        }
     }
     
     function user_exists($username) {
