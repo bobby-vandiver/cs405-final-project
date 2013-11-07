@@ -21,7 +21,7 @@
     
     function user_exists($username) {
         $user_exists_sql = "SELECT * FROM Users WHERE username = $username";
-        $rows = execute_query($create_user_sql);
+        $rows = execute_query($user_exists_sql);
         return count($rows) > 0;
     }
 
