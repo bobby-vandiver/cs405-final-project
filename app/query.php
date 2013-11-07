@@ -12,17 +12,32 @@
 
     function create_user($username, $password, $role, $houseNumber, $street, $city, $state, $zip) {
         if(!user_exists($username)) {
+
+            $connection = create_connection();
+
+            $username = mysqli_real_escape_string($connection, $username);
+            $password = mysqli_real_escape_string($connection, $password);
+            $role = mysqli_real_escape_string($connection, $role);
+            $houseNumber = mysqli_real_escape_string($connection, $houseNumber);
+            $city = mysqli_real_escape_string($connection, $city);
+            $state = mysqli_real_escape_string($connection, $state);
+            $zip = mysqli_real_escape_string($connection, $zip); 
+
             $create_user_sql =
                 "INSERT INTO Users(username, password, role, houseNumber, street, city, state, zip)
-                 VALUES ($username, $password, $role, $houseNumber, $street, $city, $state, $zip)";
-            execute_query($create_user_sql);
+                 VALUES ('$username', '$password', $role, $houseNumber, '$street', '$city', '$state', '$zip')";
+
+            execute_query($connection, $create_user_sql);
         }
     }
     
     function user_exists($username) {
-        $user_exists_sql = "SELECT * FROM Users WHERE username = $username";
-        $rows = execute_query($user_exists_sql);
-        return count($rows) > 0;
+        $connection = create_connection();
+        $username = mysqli_real_escape_string($connection, $username);
+
+        $user_exists_sql = "SELECT * FROM Users WHERE username = '$username'";
+        $rows = execute_query($connection, $user_exists_sql);
+        return mysqli_num_rows($rows) > 0;
     }
 
     function valid_password($username, $password) {

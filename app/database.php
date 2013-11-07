@@ -14,9 +14,9 @@
 
     // Utility function to perform a query so this is
     // the only script that talks to the database
-    function execute_query($sql) {
-        $connection = create_connection();
+    function execute_query($connection, $sql) {
         if($connection) {
+            printf("sql: %s\n", $sql);
             return mysqli_query($connection, $sql);
         }
     }
