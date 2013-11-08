@@ -66,36 +66,43 @@
     // =========================
 
     function item_in_stock($isbn) {
+        $connection = create_connection();
         $in_stock_sql = "";
-        execute_query($in_stock_sql);
+        execute_query($connection, $in_stock_sql);
     }
 
     function item_views($username, $isbn) {
+        $connection = create_connection();
         $item_views_sql = "";
-        execute_query($item_views_sql);
+        execute_query($connection, $item_views_sql);
     }
 
     function update_browsing_history($username, $isbn) {
+        $connection = create_connection();
         $views = item_views($username, $isbn);
         
         if($views > 0) {
             $increment_item_view_sql = "";
-            execute_query($increment_item_view_sql);
+            execute_query($connection, $increment_item_view_sql);
         }
         else {
             $create_item_view_sql = "";
-            execute_query($create_item_view_sql);
+            execute_query($connection, $create_item_view_sql);
         }
     }
 
     function get_item($isbn) {
+        $connection = create_connection();
+
         $get_item_sql = "";
-        execute_query($get_item_sql);
+        execute_query($connection, $get_item_sql);
     }
 
     function get_all_items() {
+        $connection = create_connection();
+
         $get_all_items_sql = "";
-        execute_query($get_all_items_sql);
+        execute_query($connection, $get_all_items_sql);
     }
 
     // =====================
@@ -103,47 +110,65 @@
     // =====================
 
     function create_order($orderId, $status, $time, $total, $username) {
+        $connection = create_connection();
+
         $create_order_sql = "";
-        execute_query($create_order_sql);
+        execute_query($connection, $create_order_sql);
     }
 
     function create_order_item($orderId, $isbn, $quantity, $price) {
+        $connection = create_connection();
+
         $create_order_item_sql = "";
-        $execute_query($create_order_item_sql);
+        $execute_query($connection, $create_order_item_sql);
     }
 
     function update_order_item_quantity($orderId, $isbn, $quantity) {
+        $connection = create_connection();
+
         $update_quantity_sql = "";
-        execute_query($update_quantity_sql);
+        execute_query($connection, $update_quantity_sql);
     }
 
     function get_order_status($orderId) {
+        $connection = create_connection();
+
         $get_order_status_sql = "";
-        execute_query($get_order_status_sql);
+        execute_query($connection, $get_order_status_sql);
     }
 
     function update_order_status($orderId, $status) {
+        $connection = create_connection();
+
         $update_status_sql = "";
-        execute_query($update_status_sql);
+        execute_query($connection, $update_status_sql);
     }
 
     function find_all_orders_by_username($username) {
+        $connection = create_connection();
+
         $find_all_orders_sql = "";
-        execute_query($find_all_orders_sql);
+        execute_query($connection, $find_all_orders_sql);
     }
 
     function add_item_to_inventory($isbn, $quantity, $price, $type, $name, $promotion) {
+        $connection = create_connection();
+
         $add_item_sql = "";
-        execute_query($add_item_sql);
+        execute_query($connection, $add_item_sql);
     }
 
     function find_all_orders_by_date($date) {
+        $connection = create_connection();
+
         $find_all_by_date_sql = "";
-        execute_query($find_all_by_date_sql);
+        execute_query($connection, $find_all_by_date_sql);
     }
 
     function find_all_order_items_by_order_id($orderId) {
+        $connection = create_connection();
+
         $find_all_by_order_id_sql = "";
-        execute_query($find_all_by_order_id_sql);
+        execute_query($connection, $find_all_by_order_id_sql);
     }
 ?>
