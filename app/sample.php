@@ -14,6 +14,10 @@
     printf("foo: %s</br>", ($valid) ? 'true' : 'false');
  
 
+    $role = get_role("bob");
+    printf("role: %s</br>", $role);
+
+
 //    $result = user_exists("bob");
 //    $flag = ($result) ? 'true' : 'false';
 //    echo "<p>bob exists after create: $flag</p>";

@@ -51,8 +51,14 @@
     }
 
     function get_role($username) {
-        $get_role_sql = "";
-        execute_query($get_role_sql);
+        $connection = create_connection();
+        $username = mysqli_real_escape_string($connection, $username);
+
+        $get_role_sql = "SELECT role FROM Users WHERE username = '$username'";
+        $result = execute_query($connection, $get_role_sql);
+
+        $row = mysqli_fetch_array($result);
+        return $row['role'];
     }
 
     // =========================
