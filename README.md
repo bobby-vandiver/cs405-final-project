@@ -8,6 +8,27 @@ For local development, we will be using Vagrant.
 Vagrant works in conjunction with VirtualBox to
 allow you to deploy and configure a virtual machine (VM).
 
+Multilab deployment
+-------------------
+
+To deploy this app to the multilab, two files need
+to be modified.
+
+1. mysql-bootstrap.sh
+
+   Change test to your database name.
+
+   This only applies if you want to use this
+   script to create and populate the tables.
+
+   If you want to do that by hand, you don't
+   need to worry about this.
+
+2. app/database.ini
+
+   Update the information here to match your database.
+
+
 Setting up Vagrant
 ------------------
 
