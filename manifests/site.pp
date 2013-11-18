@@ -22,6 +22,11 @@ service { 'apache2':
     require => Package['apache2'],
 }
 
+file { '/var/www/index.html':
+    ensure => absent,
+    require => Service['apache2'],
+}
+
 ########################
 # PHP configuration    #
 ########################
