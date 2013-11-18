@@ -61,13 +61,10 @@
 
     <div class="container">
 
-      <form class="form-signin">
+      <form class="form-signin" action="check_credentials.php" method="post">
         <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" class="input-block-level" placeholder="Email address">
-        <input type="password" class="input-block-level" placeholder="Password">
-        <label class="checkbox">
-          <input type="checkbox" value="remember-me"> Remember me
-        </label>
+        <input type="text" class="input-block-level" name="username" placeholder="Email address">
+        <input type="password" class="input-block-level" name="password" placeholder="Password">
         <button class="btn btn-large btn-primary" type="submit">Sign in</button>
       </form>
 

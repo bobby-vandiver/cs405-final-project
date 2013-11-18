@@ -6,7 +6,8 @@
         session_start();
         
         if(isset($_SESSION['username'])) {
-            echo "<li>Welcome back, " . $_SESSION['username'] . "</li>";
+            // TODO: Do this the right way
+            echo "<li><a href=\"#\">Welcome back, " . $_SESSION['username'] . "</a></li>";
         }
         else {
             echo "<li><a href=\"login.php\">Login</a></li>";
