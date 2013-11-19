@@ -96,3 +96,12 @@ The database provided by the Vagrant box can be accessed via
 localhost (127.0.0.1) on port 33066. The user name is 'root'
 and the password is 'mysql'. The default database that is
 created is named 'test'.
+
+Debuggging Tips
+---------------
+
+If you're PHP script is not executing and you have no idea
+why, ssh into the Vagrant box by executing `vagrant ssh`.
+
+Once inside view the error log for Apache at:
+`/var/log/apache2/error.log`
