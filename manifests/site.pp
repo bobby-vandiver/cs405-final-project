@@ -69,18 +69,14 @@ file { '/vagrant/mysql-config.sh':
 }
 
 exec { '/vagrant/mysql-config.sh':
-    notify => [
-            Service['apache2'],
-            Service['mysql'],
-        ],
+    notify => Service['apache2'],
     require => [
             File['/vagrant/mysql-config.sh'],
-            Package['mysql-server'],
+            Service['mysql'],
         ],
 }
 
 file { '/etc/mysql/my.cnf':
-    notify => Service['mysql'],
     mode => 644,
     owner => 'root',
     group => 'root',
