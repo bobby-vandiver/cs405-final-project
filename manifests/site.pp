@@ -69,6 +69,10 @@ file { '/vagrant/mysql-config.sh':
 }
 
 exec { '/vagrant/mysql-config.sh':
+    notify => [
+            Service['apache2'],
+            Service['mysql'],
+        ],
     require => [
             File['/vagrant/mysql-config.sh'],
             Package['mysql-server'],
