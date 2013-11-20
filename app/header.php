@@ -8,6 +8,7 @@
         if(isset($_SESSION['username'])) {
             // TODO: Do this the right way
             echo "<li><a href=\"#\">Welcome back, " . $_SESSION['username'] . "</a></li>";
+            echo "<li><a href=\"logout.php\">Logout</a></li>";
         }
         else {
             echo "<li><a href=\"login.php\">Login</a></li>";
