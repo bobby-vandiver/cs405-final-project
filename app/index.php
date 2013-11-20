@@ -31,7 +31,7 @@
 
   <body>
 
-    <?php include 'header.php' ?>
+    <?php include 'navbar.php' ?>
 
     <div class="container">
 
