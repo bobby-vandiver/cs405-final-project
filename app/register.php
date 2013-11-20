@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Sign in &middot; Twitter Bootstrap</title>
+    <title>Register</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -63,10 +63,18 @@
 
     <div class="container">
 
-      <form class="form-signin" action="login.php" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
+      <form class="form-signin" action="register-user.php" method="post">
+        <h2 class="form-signin-heading">Register</h2>
+
         <input type="text" class="input-block-level" name="username" placeholder="Username">
         <input type="password" class="input-block-level" name="password" placeholder="Password">
+
+        <input type="text" class="input-block-level" name="houseNumber" placeholder="House Number">
+        <input type="text" class="input-block-level" name="street" placeholder="Street">
+        <input type="text" class="input-block-level" name="city" placeholder="City">
+        <input type="text" class="input-block-level" name="state" placeholder="State">
+        <input type="text" class="input-block-level" name="zip" placeholder="Zip">
+        
         <button class="btn btn-large btn-primary" type="submit">Sign in</button>
       </form>
 
