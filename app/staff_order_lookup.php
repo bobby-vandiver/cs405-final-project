@@ -2,11 +2,23 @@
 
 $orderNumber =  $_POST["orderID"];
 $orderStatus = $_POST["status"];
-$startDate = $_POST["startDate"];
-$endDate =  $_POST["endDate"];
+$userName = $_POST["customerUsername"];
+$date1 = $_POST["startDate"];
+$date2 = $_POST["endDate"];
 
-
-
+$results;
+if ($ordernumber) {
+	$results = find_all_order_items_by_order_id($orderNumber);
+} 
+else if ($orderstatus) {
+	$results = find_all_orders_by_status($status);	
+}
+else if ($userName) {
+	$results = find_all_orders_by_username($userName); 
+}
+else {
+	$results = find_all_orders_by_date($date1, $date2);
+}
 
 
 
@@ -46,7 +58,7 @@ $endDate =  $_POST["endDate"];
 
 <body>
 
-	<?php include 'header.php' ?>
+	<?php include 'navbar.php' ?>
 
 	<legend>Orders Display</legend>
 

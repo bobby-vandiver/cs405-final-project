@@ -147,8 +147,14 @@
     function find_all_orders_by_username($username) {
         $connection = create_connection();
 
-        $find_all_orders_sql = "";
-        execute_query($connection, $find_all_orders_sql);
+        $find_all_orders_by_username_sql = "select Orders.UserName, Orders.OrderID, Orders.Status, Orders.Time, Orders.Total, OrderItems.ISBN, OrderItems.OPrice, OrderItems.Qty, Item.Name 
+		from Orders AS o
+		join OrderItems AS oi
+		on o.OrderID = oi.OrderID
+		join Item AS i
+		on oi.ISBN = i.ISBN
+		where o.UserName = $username;";
+        execute_query($connection, $find_all_orders_by_username_sql);
     }
 
     function add_item_to_inventory($isbn, $quantity, $price, $type, $name, $promotion) {
@@ -157,18 +163,44 @@
         $add_item_sql = "";
         execute_query($connection, $add_item_sql);
     }
+	
+	function find_all_orders_by_status($status) {
+        $connection = create_connection();
+		$status != 'All' ?: $status = "*"; 
+		
+        $get_order_status_sql = "select Orders.UserName, Orders.OrderID, Orders.Status, Orders.Time, Orders.Total, OrderItems.ISBN, OrderItems.OPrice, OrderItems.Qty, Item.Name 
+		from Orders AS o
+		join OrderItems AS oi
+		on o.OrderID = oi.OrderID
+		join Item AS i
+		on oi.ISBN = i.ISBN
+		where o.Status = $status;";
+        execute_query($connection, $get_order_status_sql);
+    }
 
-    function find_all_orders_by_date($date) {
+    function find_all_orders_by_date($date1, $date2) {
         $connection = create_connection();
 
-        $find_all_by_date_sql = "";
+        $find_all_by_date_sql = "select Orders.UserName, Orders.OrderID, Orders.Status, Orders.Time, Orders.Total, OrderItems.ISBN, OrderItems.OPrice, OrderItems.Qty, Item.Name 
+		from Orders AS o
+		join OrderItems AS oi
+		on o.OrderID = oi.OrderID
+		join Item AS i
+		on oi.ISBN = i.ISBN
+		where o.Time BETWEEN to_date($date1, 'mm/dd/yyyy') AND to_date($date2, 'mm/dd/yyyy');";
         execute_query($connection, $find_all_by_date_sql);
     }
 
     function find_all_order_items_by_order_id($orderId) {
         $connection = create_connection();
 
-        $find_all_by_order_id_sql = "";
+        $find_all_by_order_id_sql = "select Orders.UserName, Orders.OrderID, Orders.Status, Orders.Time, Orders.Total, OrderItems.ISBN, OrderItems.OPrice, OrderItems.Qty, Item.Name 
+		from Orders AS o
+		join OrderItems AS oi
+		on o.OrderID = oi.OrderID
+		join Item AS i
+		on oi.ISBN = i.ISBN
+		where o.OrderID = $orderId;";
         execute_query($connection, $find_all_by_order_id_sql);
     }
 ?>

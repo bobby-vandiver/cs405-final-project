@@ -31,18 +31,18 @@
 
 <body>
 
-    <?php include 'header.php' ?>
+    <?php include 'navbar.php' ?>
 	<form class="form-horizontal" action="staff_order_lookup" method="post">
 		<fieldset>
 
 		<!-- Form Name -->
 		<div class="row-fluid span12">
-			<legend>Orders Lookup</legend>
+			<legend>Order Lookup by Order Number, Order Status, Username, or Date Range</legend>
 		</div>
 		
 			<!-- Text input-->
 			<div class="control-group">
-			  <label class="control-label" for="OrderID">Order Number:</label>
+			  <label class="control-label" for="orderID">Order Number:</label>
 			  <div class="controls">
 				<input id="OrderID" name="orderID" type="text" placeholder="Enter number" class="input-xlarge">		
 			  </div>
@@ -50,7 +50,7 @@
 
 			<!-- Select Basic -->
 			<div class="control-group">
-			  <label class="control-label" for="Status">Order Status:</label>
+			  <label class="control-label" for="status">Order Status:</label>
 			  <div class="controls">
 				<select id="Status" name="status" class="input-xlarge">
 				  <option>All</option>
@@ -62,19 +62,28 @@
 
 			<!-- Text input-->
 			<div class="control-group">
-			  <label class="control-label" for="StartDate">Start Date:</label>
+			  <label class="control-label" for="customerUsername">Customer Username:</label>
 			  <div class="controls">
-				<input id="StartDate" name="startDate" type="text" placeholder="##/##/#### Format" class="input-xlarge">			
+				<input id="customerUsername" name="customerUsername" type="text" placeholder="Enter username" class="input-xlarge">			
+			  </div>
+			</div>
+			
+			<!-- Text input-->
+			<div class="control-group">
+			  <label class="control-label" for="startDate">Start Date:</label>
+			  <div class="controls">
+				<input id="startDate" name="startDate" type="text" placeholder="Enter date in mm/dd/yyyy format" class="input-xlarge">			
+			  </div>
+			</div>
+			
+			<!-- Text input-->
+			<div class="control-group">
+			  <label class="control-label" for="endDate">End Date:</label>
+			  <div class="controls">
+				<input id="endDate" name="endDate" type="text" placeholder="Enter date in mm/dd/yyyy format" class="input-xlarge">			
 			  </div>
 			</div>
 
-			<!-- Text input-->
-			<div class="control-group">
-			  <label class="control-label" for="EndDate">End Date:</label>
-			  <div class="controls">
-				<input id="EndDate" name="endDate" type="text" placeholder="##/##/#### Format" class="input-xlarge">
-			  </div>
-			</div>
 
 			<!-- Button -->
 			<div class="control-group">
