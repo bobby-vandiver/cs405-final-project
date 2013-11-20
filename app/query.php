@@ -187,7 +187,7 @@
 		on o.OrderID = oi.OrderID
 		join Item AS i
 		on oi.ISBN = i.ISBN
-		where o.Time BETWEEN to_date($date1, 'mm/dd/yyyy') AND to_date($date2, 'mm/dd/yyyy');";
+		where o.Time BETWEEN to_date($date1, \'mm/dd/yyyy\') AND to_date($date2, \'mm/dd/yyyy\');";
         execute_query($connection, $find_all_by_date_sql);
     }
 
