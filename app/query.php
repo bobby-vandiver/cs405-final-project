@@ -1,6 +1,5 @@
 <?php
     include 'database.php';
-
     /*
        This file contains all of the
        interactions with the database.
@@ -101,8 +100,14 @@
     function get_all_items() {
         $connection = create_connection();
 
-        $get_all_items_sql = "";
-        execute_query($connection, $get_all_items_sql);
+        $get_all_items_sql = "select * from Items;";
+        $rows = execute_query($connection, $get_all_items_sql);
+		if (mysqli_num_rows($rows) > 0) {
+			return $rows;
+		}
+		else {
+			return "Items not found.";
+		}
     }
 
     // =====================
@@ -154,7 +159,13 @@
 		join Item AS i
 		on oi.ISBN = i.ISBN
 		where o.UserName = $username;";
-        execute_query($connection, $find_all_orders_by_username_sql);
+        $rows = execute_query($connection, $find_all_orders_by_username_sql);
+		if (mysqli_num_rows($rows) > 0) {
+			return $rows;
+		}
+		else {
+			return "Orders not found.";
+		}
     }
 
     function add_item_to_inventory($isbn, $quantity, $price, $type, $name, $promotion) {
@@ -175,7 +186,13 @@
 		join Item AS i
 		on oi.ISBN = i.ISBN
 		where o.Status = $status;";
-        execute_query($connection, $get_order_status_sql);
+        $rows = execute_query($connection, $get_order_status_sql);
+		if (mysqli_num_rows($rows) > 0) {
+			return $rows;
+		}
+		else {
+			return "Orders not found.";
+		}
     }
 
     function find_all_orders_by_date($date1, $date2) {
@@ -188,7 +205,13 @@
 		join Item AS i
 		on oi.ISBN = i.ISBN
 		where o.Time BETWEEN to_date($date1, \'mm/dd/yyyy\') AND to_date($date2, \'mm/dd/yyyy\');";
-        execute_query($connection, $find_all_by_date_sql);
+        $rows = execute_query($connection, $find_all_by_date_sql);
+		if (mysqli_num_rows($rows) > 0) {
+			return $rows;
+		}
+		else {
+			return "Orders not found.";
+		}
     }
 
     function find_all_order_items_by_order_id($orderId) {
@@ -201,6 +224,12 @@
 		join Item AS i
 		on oi.ISBN = i.ISBN
 		where o.OrderID = $orderId;";
-        execute_query($connection, $find_all_by_order_id_sql);
+        $rows = execute_query($connection, $find_all_by_order_id_sql);
+		if (mysqli_num_rows($rows) > 0) {
+			return $rows;
+		}
+		else {
+			return "Orders not found.";
+		}
     }
 ?>
