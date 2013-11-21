@@ -1,3 +1,9 @@
+/*
+    role:
+        0 = customer
+        1 = staff
+        2 = admin
+*/
 CREATE TABLE Users (
     username        VARCHAR(50)     NOT NULL,
     password        VARCHAR(50)     NOT NULL,
