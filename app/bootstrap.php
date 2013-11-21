@@ -17,11 +17,6 @@ function head($title, $inline_css) {
         . $inline_css .
         '<link href="css/bootstrap-responsive.css" rel="stylesheet">
     
-        <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
-        <!--[if lt IE 9]>
-          <script src="../assets/js/html5shiv.js"></script>
-        <![endif]-->
-    
         <!-- Fav and touch icons -->
         <link rel="apple-touch-icon-precomposed" sizes="144x144" href="ico/apple-touch-icon-144-precomposed.png">
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="ico/apple-touch-icon-114-precomposed.png">
