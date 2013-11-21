@@ -131,12 +131,27 @@
         execute_query($connection, $create_order_sql);
     }
 
-    function create_order_item($orderId, $isbn, $quantity, $price) {
+    function create_order_item($isbn, $qty, $type, $price, $name, $promo) {
         $connection = create_connection();
 
-        $create_order_item_sql = "";
-        $execute_query($connection, $create_order_item_sql);
+        $create_order_item_sql = "INSERT INTO Items
+		VALUES ($isbn, $qty, $price, $type, '$name', $promo);";
+        execute_query($connection, $create_order_item_sql);
+		if (mysqli_error($connection) != null) {
+			echo $create_order_item_sql . "\n";
+			echo "Error creating record: " . mysqli_error($connection) . "\n";
+		}
+		return;
     }
+	
+	function lookup_max_isbn() {
+		$connection = create_connection();
+
+        $lookup_max_isbn_sql = "select max(isbn) from Items;";
+        $rows = mysqli_fetch_assoc(execute_query($connection, $lookup_max_isbn_sql));
+		$isbn = $rows['max(isbn)'];
+		return $isbn;
+	}
 
     function update_order_item_quantity($orderId, $isbn, $quantity) {
         $connection = create_connection();
