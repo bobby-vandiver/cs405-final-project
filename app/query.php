@@ -96,6 +96,16 @@
         $get_item_sql = "";
         execute_query($connection, $get_item_sql);
     }
+	
+	function update_inventory_item($isbn, $qty, $promotion) {
+		$connection = create_connection();
+
+        $update_inventory_item_sql = "UPDATE Items
+			SET Items.quantity = $qty, Items.promotion = $promotion
+			WHERE Items.isbn = $isbn;";
+		execute_query($connection, $update_inventory_item_sql);
+		return;
+	}
 
     function get_all_items() {
         $connection = create_connection();
