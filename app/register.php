@@ -2,7 +2,7 @@
     include 'bootstrap.php';
     include 'form-style.php';
 
-    head("Sign-in", FORM_CSS);
+    head("Register", FORM_CSS);
 ?>  
    <body>
 
