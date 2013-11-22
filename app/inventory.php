@@ -4,13 +4,23 @@ include 'bootstrap.php';
 $inline_css = '<style>body { padding-top: 60px; } </style>';
 
     head("Chico's Toy Store", $inline_css);
+	
+	
 
 ?>
 
 
 <body>
 
-	<?php include 'navbar.php' ?>
+	<?php 
+		include 'navbar.php';
+		if (logged_in_user_is_admin()) {
+			$can_set_promotion = "contenteditable=\"true\" onblur=\"updateEvent(this)\"";
+		}
+		else {
+			$can_set_promotion = "";
+		}
+	?>
 	
 	<div class="container">
 		<div class="row-fluid span12">
@@ -58,8 +68,9 @@ $inline_css = '<style>body { padding-top: 60px; } </style>';
 						print"<td>$price</td>";
 					}
 					elseif ($cname === "promotion") {
-						$promotion = $cvalue;
-						printf("<td contenteditable=\"true\" onblur=\"updateEvent(this)\">%1.2f</td>", $cvalue);
+						$promotion = sprintf('%0.2f', $cvalue);
+						$cell_contents = "<td $can_set_promotion >$promotion</td>";
+						print "$cell_contents";
 					}
 					else {
 						print "<td>$cvalue</td>";

@@ -14,12 +14,26 @@
             echo "<li><a href=\"sign-in.php\">Login</a></li>";
         }
     }
+	
+	function display_customer_only_links() {
+		if(logged_in_user_is_customer()) {
+			echo "<li><a href=\"orders.php\">My Orders</a></li>";
+        }
+	}
 
     function display_staff_links() {
         if(logged_in_user_is_staff()) {
-            echo "<li><a href=\"staff.php\">Staff Stuff</a></li>";
+			echo "<li><a href=\"inventory.php\">Inventory</a></li>";
+			echo "<li><a href=\"staff_orders.php\">Orders Lookup</a></li>";
         }
     }
+	
+	function display_admin_links() {
+		if(logged_in_user_is_admin()) {
+			echo "<li><a href=\"statistics.php\">Statistics</a></li>";
+        }
+	
+	}
 ?>
 
 <div class="navbar navbar-inverse navbar-fixed-top">
@@ -35,8 +49,9 @@
                 <ul class="nav">
                     <li class="active"><a href="index.php">Home</a></li>
                     <li><a href="items.php">Items</a></li>
-                    <li><a href="orders.php">Orders</a></li>
+                    <?php display_customer_only_links(); ?>
                     <?php display_staff_links(); ?>
+					<?php display_admin_links(); ?>
                     <?php display_login_or_welcome(); ?>
                </ul>
             </div><!--/.nav-collapse -->

@@ -19,6 +19,10 @@
     function user_is_logged_in() {
         return get_logged_in_user() != null;
     }
+	
+	function is_customer($role) {
+        return $role == ROLE_CUSTOMER;
+    }
 
     function is_staff($role) {
         return $role == ROLE_STAFF;
@@ -26,6 +30,19 @@
 
     function is_admin($role) {
         return $role == ROLE_ADMIN;
+    }
+	
+	function logged_in_user_is_customer() {
+
+        if(user_is_logged_in()) {
+           $username = get_logged_in_user();
+
+           $role = get_role($username);
+           return is_customer($role);
+        }
+        else {
+            return false;
+        }
     }
 
     function logged_in_user_is_staff() {
@@ -35,6 +52,19 @@
 
            $role = get_role($username);
            return is_staff($role) || is_admin($role);
+        }
+        else {
+            return false;
+        }
+    }
+	
+	function logged_in_user_is_admin() {
+
+        if(user_is_logged_in()) {
+           $username = get_logged_in_user();
+
+           $role = get_role($username);
+           return  is_admin($role);
         }
         else {
             return false;
