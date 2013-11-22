@@ -106,6 +106,20 @@
 		execute_query($connection, $update_inventory_item_sql);
 		return;
 	}
+	
+	function decrement_inventory_qty($isbn) {
+		$connection = create_connection();
+		
+		$rows = mysqli_fetch_assoc(execute_query($connection, "select quantity from Items where isbn = $isbn;"));
+		$startingQty = $rows['quantity'];
+		$endingQty = $startingQty - 1;
+
+        $update_inventory_item_sql = "UPDATE Items
+			SET Items.quantity = $endingQty
+			WHERE Items.isbn = $isbn;";
+		execute_query($connection, $update_inventory_item_sql);
+		return;
+	}
 
     function get_all_items() {
         $connection = create_connection();
@@ -130,12 +144,11 @@
         $create_order_sql = "";
         execute_query($connection, $create_order_sql);
     }
-
-    function create_order_item($isbn, $qty, $type, $price, $name, $promo) {
+	
+	function create_order_item($isbn, $qty, $type, $price, $name, $promo) {
         $connection = create_connection();
 
-        $create_order_item_sql = "INSERT INTO Items
-		VALUES ($isbn, $qty, $price, $type, '$name', $promo);";
+        $create_order_item_sql = "";
         execute_query($connection, $create_order_item_sql);
 		if (mysqli_error($connection) != null) {
 			echo $create_order_item_sql . "\n";
@@ -177,14 +190,14 @@
     function find_all_orders_by_username($username) {
         $connection = create_connection();
 
-        $find_all_orders_by_username_sql = "select Orders.UserName, Orders.OrderID, Orders.Status, Orders.Time, Orders.Total, OrderItems.ISBN, OrderItems.OPrice, OrderItems.Qty, Item.Name 
-		from Orders AS o
-		join OrderItems AS oi
-		on o.OrderID = oi.OrderID
-		join Item AS i
-		on oi.ISBN = i.ISBN
-		where o.UserName = $username;";
+        $find_all_orders_by_username_sql = "select o.username, o.orderId, o.status, o.time, o.total, oi.isbn, i.name, oi.salePrice, oi.quantity 
+		from Orders AS o, OrderItems AS oi, Items AS i
+		where o.orderId = oi.orderId and oi.isbn = i.isbn and o.username = '$username';";
         $rows = execute_query($connection, $find_all_orders_by_username_sql);
+		if (mysqli_error($connection) != null) {
+			echo $find_all_orders_by_username_sql . "\n";
+			echo "Error creating record: " . mysqli_error($connection) . "\n";
+		}
 		if (mysqli_num_rows($rows) > 0) {
 			return $rows;
 		}
@@ -192,25 +205,34 @@
 			return "Orders not found.";
 		}
     }
-
-    function add_item_to_inventory($isbn, $quantity, $price, $type, $name, $promotion) {
+	
+	 function add_item_to_inventory($isbn, $qty, $type, $price, $name, $promo) {
         $connection = create_connection();
 
-        $add_item_sql = "";
-        execute_query($connection, $add_item_sql);
+        $add_item_to_inventory_sql = "INSERT INTO Items
+		VALUES ($isbn, $qty, $price, $type, '$name', $promo);";
+        execute_query($connection, $add_item_to_inventory_sql);
+		if (mysqli_error($connection) != null) {
+			echo $create_order_item_sql . "\n";
+			echo "Error creating record: " . mysqli_error($connection) . "\n";
+		}
+		return;
     }
 	
 	function find_all_orders_by_status($status) {
         $connection = create_connection();
-		$status != 'All' ?: $status = "*"; 
-		
-        $get_order_status_sql = "select Orders.UserName, Orders.OrderID, Orders.Status, Orders.Time, Orders.Total, OrderItems.ISBN, OrderItems.OPrice, OrderItems.Qty, Item.Name 
-		from Orders AS o
-		join OrderItems AS oi
-		on o.OrderID = oi.OrderID
-		join Item AS i
-		on oi.ISBN = i.ISBN
-		where o.Status = $status;";
+		if ($status === '0') {
+			$whereClause = "and o.status = 0;";
+		}
+		elseif ($status === '1') {
+			$whereClause = "and o.status = 1;"; 
+		}
+		else {
+			$whereClause = ";";
+		}
+        $get_order_status_sql = "select o.username, o.orderId, o.status, o.time, o.total, oi.isbn, i.name, oi.salePrice, oi.quantity 
+		from Orders AS o, OrderItems AS oi, Items AS i
+		where o.orderId = oi.orderId and oi.isbn = i.isbn $whereClause";
         $rows = execute_query($connection, $get_order_status_sql);
 		if (mysqli_num_rows($rows) > 0) {
 			return $rows;
@@ -223,13 +245,9 @@
     function find_all_orders_by_date($date1, $date2) {
         $connection = create_connection();
 
-        $find_all_by_date_sql = "select Orders.UserName, Orders.OrderID, Orders.Status, Orders.Time, Orders.Total, OrderItems.ISBN, OrderItems.OPrice, OrderItems.Qty, Item.Name 
-		from Orders AS o
-		join OrderItems AS oi
-		on o.OrderID = oi.OrderID
-		join Item AS i
-		on oi.ISBN = i.ISBN
-		where o.Time BETWEEN to_date($date1, \'mm/dd/yyyy\') AND to_date($date2, \'mm/dd/yyyy\');";
+        $find_all_by_date_sql = "select o.username, o.orderId, o.status, o.time, o.total, oi.isbn, i.name, oi.salePrice, oi.quantity 
+		from Orders AS o, OrderItems AS oi, Items AS i
+		where o.orderId = oi.orderId and oi.isbn = i.isbn and date(o.Time) > $date1 AND date(o.Time) < $date2;";
         $rows = execute_query($connection, $find_all_by_date_sql);
 		if (mysqli_num_rows($rows) > 0) {
 			return $rows;
@@ -242,13 +260,9 @@
     function find_all_order_items_by_order_id($orderId) {
         $connection = create_connection();
 
-        $find_all_by_order_id_sql = "select Orders.UserName, Orders.OrderID, Orders.Status, Orders.Time, Orders.Total, OrderItems.ISBN, OrderItems.OPrice, OrderItems.Qty, Item.Name 
-		from Orders AS o
-		join OrderItems AS oi
-		on o.OrderID = oi.OrderID
-		join Item AS i
-		on oi.ISBN = i.ISBN
-		where o.OrderID = $orderId;";
+        $find_all_by_order_id_sql = "select o.username, o.orderId, o.status, o.time, o.total, oi.isbn, i.name, oi.salePrice, oi.quantity 
+		from Orders AS o, OrderItems AS oi, Items AS i
+		where o.orderId = oi.orderId and oi.isbn = i.isbn and o.orderId = '$orderId';";
         $rows = execute_query($connection, $find_all_by_order_id_sql);
 		if (mysqli_num_rows($rows) > 0) {
 			return $rows;

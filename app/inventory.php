@@ -11,6 +11,7 @@ $inline_css = '<style>body { padding-top: 60px; } </style>';
 <body>
 
 	<?php include 'navbar.php' ?>
+	
 	<div class="container">
 		<div class="row-fluid span12">
 				<legend>Inventory Display</legend>

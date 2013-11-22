@@ -8,7 +8,7 @@
 	$newName = $_POST['name'];
 	$newPromo = $_POST['promo'];
 	
-	create_order_item($newIsbn, $newQty, $newType, $newPrice, $newName, $newPromo);
+	add_item_to_inventory($newIsbn, $newQty, $newType, $newPrice, $newName, $newPromo);
 ?>
 <script>
 	document.location = "inventory.php";

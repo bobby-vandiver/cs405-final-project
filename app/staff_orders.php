@@ -40,9 +40,9 @@ $inline_css = '<style>body { padding-top: 60px; } </style>';
 			  <label class="control-label" for="status">Order Status:</label>
 			  <div class="controls">
 				<select id="status" name="status" class="input-xlarge">
-				  <option>All</option>
-				  <option>Shipped</option>
-				  <option>Not Shipped</option>
+				  <option value="2">All</option>
+				  <option value="1">Shipped</option>
+				  <option value="0">Not Shipped</option>
 				</select>
 			  </div>
 			</div>
@@ -52,7 +52,7 @@ $inline_css = '<style>body { padding-top: 60px; } </style>';
 			<div class="control-group">
 			  <label class="control-label" for="startDate">Start Date:</label>
 			  <div class="controls">
-				<input id="startDate" name="startDate" type="text" placeholder="Enter date in mmddyyyy format" class="input-xlarge">			
+				<input id="startDate" name="startDate" type="text" placeholder="Enter date in yyyymmdd format" class="input-xlarge">			
 			  </div>
 			</div>
 			
@@ -60,7 +60,7 @@ $inline_css = '<style>body { padding-top: 60px; } </style>';
 			<div class="control-group">
 			  <label class="control-label" for="endDate">End Date:</label>
 			  <div class="controls">
-				<input id="endDate" name="endDate" type="text" placeholder="Enter date in mmddyyyy format" class="input-xlarge">			
+				<input id="endDate" name="endDate" type="text" placeholder="Enter date in yyyymmdd format" class="input-xlarge">			
 			  </div>
 			</div>
 
