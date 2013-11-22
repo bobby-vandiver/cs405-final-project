@@ -183,7 +183,9 @@
     function update_order_status($orderId, $status) {
         $connection = create_connection();
 
-        $update_status_sql = "";
+        $update_status_sql = "UPDATE Orders
+			SET Orders.status = $status
+			WHERE Orders.orderId = $orderId;";
         execute_query($connection, $update_status_sql);
     }
 
