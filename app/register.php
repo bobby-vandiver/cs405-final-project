@@ -10,7 +10,7 @@
 
     <div class="container">
 
-      <form class="form-signin" action="register-user.php" method="post">
+      <form class="form-signin" action="register-user.php" method="post" id="register-form">
         <h2 class="form-signin-heading">Register</h2>
 
         <input type="text" class="input-block-level" name="username" placeholder="Username">
@@ -28,5 +28,45 @@
     </div> <!-- /container -->
 
     <?php include 'footer.php'; ?>
- </body>
+
+    <script>
+
+    $(document).ready(function() {
+
+        $('#register-form').validate({
+            rules: {
+                username: {
+                    required: true,
+                    maxlength: MAX_STRING_LENGTH
+                },
+                password: {
+                    required: true,
+                    maxlength: MAX_STRING_LENGTH
+                },
+                houseNumber: {
+                    required: true,
+                    digits: true
+                },
+                street: {
+                    required: true,
+                    maxlength: MAX_STRING_LENGTH
+                },
+                city: {
+                    required: true,
+                    maxlength: MAX_STRING_LENGTH
+                },
+                state: {
+                    required: true,
+                    regex: /^[a-zA-Z]{2}$/
+                },
+                zip: {
+                    required: true,
+                    regex: /^\d{5}$/
+                }
+            },
+        });
+    });
+
+    </script>
+  </body>
 </html>
