@@ -92,9 +92,10 @@
 
     function get_item($isbn) {
         $connection = create_connection();
+		$isbn = mysqli_real_escape_string($connection, $isbn);
 
-        $get_item_sql = "";
-        execute_query($connection, $get_item_sql);
+        $get_item_sql = "SELECT * FROM Items Where isbn = $isbn";
+        return mysqli_fetch_assoc(execute_query($connection, $get_item_sql));
     }
 	
 	function update_inventory_item($isbn, $qty, $promotion) {
