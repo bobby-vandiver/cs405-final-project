@@ -1,5 +1,6 @@
 <?php
     include 'query.php';
+	include 'cart.php';	
 
 //    $result = user_exists("bob");
 //    $flag = ($result) ? 'true' : 'false';
@@ -20,7 +21,15 @@
 	$isbn = '95';
 	$item = get_item($isbn);
 
-	print_r($item);	
+//	add_item_to_cart($isbn, 13);
+
+//    remove_item_in_cart($isbn);
+
+//	var_dump($item);	
+//	remove_all_items_in_cart();
+
+	printf("\rcookie:");
+	var_dump(get_all_items_in_cart());
 
 //    $result = user_exists("bob");
 //    $flag = ($result) ? 'true' : 'false';
