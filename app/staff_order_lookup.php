@@ -34,7 +34,7 @@ include 'bootstrap.php';
 			<legend>Orders Display</legend>
 		</div>
 		
-		<table class="table table-striped">
+		<table id="ordersTable" class="table table-striped">
 			<?php 
 			if ($results === "Orders not found.") {
 				print("<h1>$results</h1>");
@@ -51,6 +51,7 @@ include 'bootstrap.php';
 					  <th>Item Name</th>
 					  <th>Sale Price</th>
 					  <th>Quantity</th>
+					  <th>Change shipped status</th>
 					</tr>
 				  </thead>
 				  <tbody>";
@@ -58,14 +59,62 @@ include 'bootstrap.php';
 				while($row = mysqli_fetch_assoc($results)){
 					print "<tr>";
 					foreach($row as $cname => $cvalue){
-						print "<td>$cvalue</td>";
+						if ($cname === "status") {
+							if ($cvalue === '1') {
+								print"<td>Shipped</td>";
+							}
+							else {
+								print"<td>Not Shipped</td>";
+							}							
+						}
+						elseif ($cname === "orderId") {
+								print"<td class=\"order\" id=\"order$index\">$cvalue</td>";
+						}
+						elseif ($cname === "total") {
+							$val = money_format('$%i', $cvalue);
+							print"<td>$val</td>";
+						}
+						elseif ($cname === "salePrice") {
+							$val = money_format('$%i', $cvalue);
+							print"<td>$val</td>";
+						}
+						else {
+							print"<td>$cvalue</td>";
+						}
 					}
+					print "<td><a class=\"btn btn-success\" onclick=\"toggleShipped(this)\">Toggle Shipped</a></td>";
 					print "</tr>";
+					$index++;
 				}
 				print "</tbody>";
 			}?>
 		</table>
 	</div>
+	<script>
+		function toggleShipped(field) {
+			var item = $(field).parent('td').parent('tr').children('td');
+			var orderNum = item[1].innerHTML;
+			if (item[2].innerHTML == "Not Shipped") {
+				$.post("orderUpdate.php", {orderId: orderNum, status: '1'});
+				$('#ordersTable>tbody>tr>td:nth-child(1)').each( function(){
+				   if ($(this).parent('tr').children('td')[1].innerHTML == item[1].innerHTML) {
+						$(this).parent('tr').children('td')[2].innerHTML = "Shipped";
+				   }       
+				});
+				item[2].innerHTML = "Shipped";
+			}
+			else {
+				$.post("orderUpdate.php", {orderId: orderNum, status: '0'});
+				$('#ordersTable>tbody>tr>td:nth-child(1)').each( function(){
+				   if ($(this).parent('tr').children('td')[1].innerHTML == item[1].innerHTML) {
+						$(this).parent('tr').children('td')[2].innerHTML = "Not Shipped";
+				   }       
+				});
+				item[2].innerHTML = "Not Shipped";
+			}
+		}
+	
+	</script>
 	<?php include 'footer.php'; ?>
 </body>
 </html>
