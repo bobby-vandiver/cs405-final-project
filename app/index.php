@@ -1,7 +1,14 @@
   <?php
     include 'bootstrap.php';
     
-    $inline_css = '<style>body { padding-top: 60px; } </style>';
+    $inline_css = '
+        <style>
+            body {
+                padding-top: 40px;
+                padding-bottom: 40px;
+                background-color: #f5f5f5;
+            }
+        </style>';
 
     head("Chico's Toy Store", $inline_css);
   ?>
