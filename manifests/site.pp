@@ -4,8 +4,19 @@ exec { 'apt-get update':
 
 Exec['apt-get update'] -> Package <| |>
 
+########################
+# Utilities            #
+########################
+
 package { 'vim':
     ensure => installed,
+}
+
+file { '/home/vagrant/.bashrc':
+    mode => 644,
+    owner => 'vagrant',
+    group => 'vagrant',
+    source => 'file:///vagrant/.bashrc',
 }
 
 ########################
