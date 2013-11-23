@@ -96,15 +96,22 @@ include 'bootstrap.php';
 			var orderNum = item[1].innerHTML;
 			var isbnNum = item[5].innerHTML;
 			var qty = item[8].innerHTML;
-			var inventoryExists = false;
-			$.post("checkInventory.php", {orderId: orderNum}), function(return) {
-				inventoryExists = return;
-			});
-			if (inventoryExists == false) {
-				alert("Insufficient inventory to complete this order.");
-				return;
-			}
+			var inventoryExists = 'false';
+			
 			if (item[2].innerHTML == "Pending") {
+				$.ajax({
+					type: "POST",
+					url: "checkInventory.php",
+					dataType: "text",
+					data: {orderId : orderNum},
+					async: false,
+				}).done(function ( data ) {
+						inventoryExists = data;
+				});
+				if (inventoryExists == 'false') {
+					alert("Insufficient inventory to complete this order.");
+					return;
+				}
 				$.post("orderUpdate.php", {orderId: orderNum, status: '1'});
 				$('#ordersTable>tbody>tr>td:nth-child(1)').each( function(){
 				   if ($(this).parent('tr').children('td')[1].innerHTML == item[1].innerHTML) {

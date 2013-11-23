@@ -210,16 +210,21 @@
 	function check_order_quantities($orderId) {
 		$connection = create_connection();
 
-        $get_isbns_qty_in_order_sql = "select oi.isbn, i.quantity, oi.quantity
-		from OrderItems AS oi, Items AS i
-		where oi.isbn = i.isbn and o.orderId = '$orderId';";
+        $get_isbns_qty_in_order_sql = "select oi.isbn, i.quantity AS qty, oi.quantity 
+		from OrderItems AS oi, Items AS i 
+		where oi.isbn = i.isbn and oi.orderId = $orderId;";
         $results = execute_query($connection, $get_isbns_qty_in_order_sql);
 		while($row = mysqli_fetch_assoc($results)){
-			if ($row['i.quantity'] < $row['oi.quantity']) {
-				return false;
+			if ($row['qty'] < $row['quantity']) {
+				return 'false';
 			}
 		}
-		return true;
+		if (mysqli_error($connection) != null) {
+			return $get_isbns_qty_in_order_sql . mysqli_error($connection);
+		}
+		else {
+			return 'true';
+		}
 	}
 
     function find_all_orders_by_username($username) {
