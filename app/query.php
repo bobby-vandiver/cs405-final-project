@@ -153,6 +153,13 @@
 		return;
 	}
 
+    function get_all_items_in_stock() {
+        $connection = create_connection();
+
+        $get_items_in_stock_sql = "SELECT * FROM Items WHERE quantity > 0";
+        return execute_query($connection, $get_items_in_stock_sql);
+    }
+
     function get_all_items() {
         $connection = create_connection();
 

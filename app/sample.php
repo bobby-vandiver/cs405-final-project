@@ -20,12 +20,20 @@
 
 	$isbn = '95';
 	$item = get_item($isbn);
-    var_dump($item);
+//    var_dump($item);
 
     echo "</br></br>";
 
     $in_stock = item_in_stock($isbn);
-    var_dump($in_stock);
+//    var_dump($in_stock);
+
+
+    $items_in_stock = get_all_items_in_stock();
+
+    while($row = mysqli_fetch_array($items_in_stock)) {
+        var_dump($row);
+        echo "</br></br>";
+    }
 
 //	add_item_to_cart($isbn, 13);
 
