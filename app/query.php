@@ -77,6 +77,16 @@
 		}
     }
 
+    function item_in_stock_foo($isbn) {
+        $isbn = mysqli_real_escape_string($connection, $isbn);
+
+        $in_stock_sql = "SELECT quantity FROM Items WHERE isbn = '$isbn'";
+        $result = execute_query($connection, $in_stock_sql);
+
+        $row = mysqli_fetch_array($result);
+        return $row['quantity'] > 0;
+    }
+
     function item_views($username, $isbn) {
         $connection = create_connection();
         $item_views_sql = "";

@@ -20,6 +20,12 @@
 
 	$isbn = '95';
 	$item = get_item($isbn);
+    var_dump($item);
+
+    echo "</br></br>";
+
+    $in_stock = item_in_stock($isbn);
+    var_dump($in_stock);
 
 //	add_item_to_cart($isbn, 13);
 
@@ -28,8 +34,8 @@
 //	var_dump($item);	
 //	remove_all_items_in_cart();
 
-	printf("\rcookie:");
-	var_dump(get_all_items_in_cart());
+//	printf("\rcookie:");
+//	var_dump(get_all_items_in_cart());
 
 //    $result = user_exists("bob");
 //    $flag = ($result) ? 'true' : 'false';
