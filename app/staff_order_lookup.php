@@ -64,7 +64,7 @@ include 'bootstrap.php';
 								print"<td>Shipped</td>";
 							}
 							else {
-								print"<td>Not Shipped</td>";
+								print"<td>Pending</td>";
 							}							
 						}
 						elseif ($cname === "orderId") {
@@ -94,11 +94,24 @@ include 'bootstrap.php';
 		function toggleShipped(field) {
 			var item = $(field).parent('td').parent('tr').children('td');
 			var orderNum = item[1].innerHTML;
-			if (item[2].innerHTML == "Not Shipped") {
+			var isbnNum = item[5].innerHTML;
+			var qty = item[8].innerHTML;
+			var inventoryExists = false;
+			$.post("checkInventory.php", {orderId: orderNum}), function(return) {
+				inventoryExists = return;
+			});
+			if (inventoryExists == false) {
+				alert("Insufficient inventory to complete this order.");
+				return;
+			}
+			if (item[2].innerHTML == "Pending") {
 				$.post("orderUpdate.php", {orderId: orderNum, status: '1'});
 				$('#ordersTable>tbody>tr>td:nth-child(1)').each( function(){
 				   if ($(this).parent('tr').children('td')[1].innerHTML == item[1].innerHTML) {
 						$(this).parent('tr').children('td')[2].innerHTML = "Shipped";
+						var thisISBN = $(this).parent('tr').children('td')[5].innerHTML;
+						var thisQty = $(this).parent('tr').children('td')[8].innerHTML;
+						$.post("decrementInventory.php", {isbn: thisISBN, quantity: thisQty});
 				   }       
 				});
 				item[2].innerHTML = "Shipped";
@@ -107,10 +120,13 @@ include 'bootstrap.php';
 				$.post("orderUpdate.php", {orderId: orderNum, status: '0'});
 				$('#ordersTable>tbody>tr>td:nth-child(1)').each( function(){
 				   if ($(this).parent('tr').children('td')[1].innerHTML == item[1].innerHTML) {
-						$(this).parent('tr').children('td')[2].innerHTML = "Not Shipped";
+						$(this).parent('tr').children('td')[2].innerHTML = "Pending";
+						var thisISBN = $(this).parent('tr').children('td')[5].innerHTML;
+						var thisQty = $(this).parent('tr').children('td')[8].innerHTML;
+						$.post("incrementInventory.php", {isbn: thisISBN, quantity: thisQty});
 				   }       
 				});
-				item[2].innerHTML = "Not Shipped";
+				item[2].innerHTML = "Pending";
 			}
 		}
 	

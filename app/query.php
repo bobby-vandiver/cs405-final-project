@@ -64,10 +64,17 @@
     // Inventory related queries
     // =========================
 
-    function item_in_stock($isbn) {
+    function item_in_stock($isbn, $requestedQty) {
         $connection = create_connection();
-        $in_stock_sql = "";
-        execute_query($connection, $in_stock_sql);
+		
+		$rows = mysqli_fetch_assoc(execute_query($connection, "select quantity from Items where isbn = $isbn;"));
+		$inStockQty = $rows['quantity'];
+		if ($inStockQty >= $requestedQty) {
+			return true;
+		}
+		else {
+			return false
+		}
     }
 
     function item_views($username, $isbn) {
@@ -108,12 +115,26 @@
 		return;
 	}
 	
-	function decrement_inventory_qty($isbn) {
+	function decrement_inventory_qty($isbn, $qty) {
 		$connection = create_connection();
 		
 		$rows = mysqli_fetch_assoc(execute_query($connection, "select quantity from Items where isbn = $isbn;"));
 		$startingQty = $rows['quantity'];
-		$endingQty = $startingQty - 1;
+		$endingQty = $startingQty - $qty;
+
+        $update_inventory_item_sql = "UPDATE Items
+			SET Items.quantity = $endingQty
+			WHERE Items.isbn = $isbn;";
+		execute_query($connection, $update_inventory_item_sql);
+		return;
+	}
+	
+	function increment_inventory_qty($isbn, $qty) {
+		$connection = create_connection();
+		
+		$rows = mysqli_fetch_assoc(execute_query($connection, "select quantity from Items where isbn = $isbn;"));
+		$startingQty = $rows['quantity'];
+		$endingQty = $startingQty + $qty;
 
         $update_inventory_item_sql = "UPDATE Items
 			SET Items.quantity = $endingQty
@@ -151,11 +172,6 @@
 
         $create_order_item_sql = "";
         execute_query($connection, $create_order_item_sql);
-		if (mysqli_error($connection) != null) {
-			echo $create_order_item_sql . "\n";
-			echo "Error creating record: " . mysqli_error($connection) . "\n";
-		}
-		return;
     }
 	
 	function lookup_max_isbn() {
@@ -188,7 +204,23 @@
 			SET Orders.status = $status
 			WHERE Orders.orderId = $orderId;";
         execute_query($connection, $update_status_sql);
+		return;
     }
+	
+	function check_order_quantities($orderId) {
+		$connection = create_connection();
+
+        $get_isbns_qty_in_order_sql = "select oi.isbn, i.quantity, oi.quantity
+		from OrderItems AS oi, Items AS i
+		where oi.isbn = i.isbn and o.orderId = '$orderId';";
+        $results = execute_query($connection, $get_isbns_qty_in_order_sql);
+		while($row = mysqli_fetch_assoc($results)){
+			if ($row['i.quantity'] < $row['oi.quantity']) {
+				return false;
+			}
+		}
+		return true;
+	}
 
     function find_all_orders_by_username($username) {
         $connection = create_connection();

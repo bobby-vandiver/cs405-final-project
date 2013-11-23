@@ -3,12 +3,8 @@
 	
 	$orderId = $_POST['orderId'];
     $status = $_POST['status'];
+	$quantity = $_POST['quantity'];
 	
 	update_order_status($orderId, $status);
 	
-	
 ?>
-
-<script>
-	document.location = "staff_orders.php";
-</script>

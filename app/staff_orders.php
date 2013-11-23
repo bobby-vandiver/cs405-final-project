@@ -42,7 +42,7 @@ $inline_css = '<style>body { padding-top: 60px; } </style>';
 				<select id="status" name="status" class="input-xlarge">
 				  <option value="2">All</option>
 				  <option value="1">Shipped</option>
-				  <option value="0">Not Shipped</option>
+				  <option value="0">Pending</option>
 				</select>
 			  </div>
 			</div>
