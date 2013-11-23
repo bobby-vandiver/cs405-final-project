@@ -64,20 +64,7 @@
     // Inventory related queries
     // =========================
 
-    function item_in_stock($isbn, $requestedQty) {
-        $connection = create_connection();
-		
-		$rows = mysqli_fetch_assoc(execute_query($connection, "select quantity from Items where isbn = $isbn;"));
-		$inStockQty = $rows['quantity'];
-		if ($inStockQty >= $requestedQty) {
-			return true;
-		}
-		else {
-			return false;
-		}
-    }
-
-    function item_in_stock_foo($isbn) {
+   function item_in_stock($isbn) {
         $isbn = mysqli_real_escape_string($connection, $isbn);
 
         $in_stock_sql = "SELECT quantity FROM Items WHERE isbn = '$isbn'";
