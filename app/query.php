@@ -146,7 +146,7 @@
     function get_all_items() {
         $connection = create_connection();
 
-        $get_all_items_sql = "select * from Items;";
+        $get_all_items_sql = "select * from Items  order by cast(isbn as unsigned) asc;";
         $rows = execute_query($connection, $get_all_items_sql);
 		if (mysqli_num_rows($rows) > 0) {
 			return $rows;
@@ -304,6 +304,49 @@
 		from Orders AS o, OrderItems AS oi, Items AS i
 		where o.orderId = oi.orderId and oi.isbn = i.isbn and o.orderId = '$orderId';";
         $rows = execute_query($connection, $find_all_by_order_id_sql);
+		if (mysqli_num_rows($rows) > 0) {
+			return $rows;
+		}
+		else {
+			return "Orders not found.";
+		}
+    }
+	
+	 // =====================
+    // Statistics related queries
+    // =====================
+	
+	function find_sales_in_past_week($sort) {
+        $connection = create_connection();
+		
+        $find_sales_in_past_week_sql = "select distinct(Items.isbn), Items.name, sum(ois.quantity) from Items left join (select OrderItems.isbn, OrderItems.quantity from OrderItems join Orders on OrderItems.orderId = Orders.orderId where Orders.time >= date_sub(CURDATE(), INTERVAL 7 DAY)) as ois on ois.isbn = Items.isbn group by Items.isbn order by cast($sort;";
+		$rows = execute_query($connection, $find_sales_in_past_week_sql);
+		if (mysqli_num_rows($rows) > 0) {
+			return $rows;
+		}
+		else {
+			return "Orders not found.";
+		}
+    }
+	
+	function find_sales_in_past_month($sort) {
+        $connection = create_connection();
+
+        $find_sales_in_past_month_sql = "select distinct(Items.isbn), Items.name, sum(ois.quantity) from Items left join (select OrderItems.isbn, OrderItems.quantity from OrderItems join Orders on OrderItems.orderId = Orders.orderId where Orders.time >= date_sub(CURDATE(), INTERVAL 30 DAY)) as ois on ois.isbn = Items.isbn group by Items.isbn order by cast($sort;";
+		$rows = execute_query($connection, $find_sales_in_past_month_sql);
+		if (mysqli_num_rows($rows) > 0) {
+			return $rows;
+		}
+		else {
+			return "Orders not found.";
+		}
+    }
+	
+	function find_sales_in_past_year($sort) {
+        $connection = create_connection();
+
+        $find_sales_in_past_year_sql = "select distinct(Items.isbn), Items.name, sum(ois.quantity) from Items left join (select OrderItems.isbn, OrderItems.quantity from OrderItems join Orders on OrderItems.orderId = Orders.orderId where Orders.time >= date_sub(CURDATE(), INTERVAL 365 DAY)) as ois on ois.isbn = Items.isbn group by Items.isbn order by cast($sort;";
+		$rows = execute_query($connection, $find_sales_in_past_year_sql);
 		if (mysqli_num_rows($rows) > 0) {
 			return $rows;
 		}
