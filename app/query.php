@@ -210,8 +210,15 @@
 		$qty = mysqli_real_escape_string($connection, $qty);
 		$salePrice = mysqli_real_escape_string($connection, $salePrice);
 
-        $create_order_item_sql = "INSERT INTO OrderItems (orderId, isbn, quantity, salePrice) VALUES ($orderId, '$isbn', $quantity, $salePrice)";
+        $create_order_item_sql = "INSERT INTO OrderItems (orderId, isbn, quantity, salePrice) VALUES ($orderId, '$isbn', $qty, $salePrice)";
         execute_query($connection, $create_order_item_sql);
+    }
+
+    function find_all_order_summaries_by_username($username) {
+        $connection = create_connection();
+        $username = mysqli_real_escape_string($connection, $username);
+        $find_all_orders_sql = "SELECT * FROM Orders WHERE username = '$username'";
+        return execute_query($connection, $find_all_orders_sql);
     }
 
     function get_order_items($orderId) {
@@ -282,6 +289,15 @@
 			return 'true';
 		}
 	}
+
+    function user_has_orders($username) {
+        $connection = create_connection();
+		$username = mysqli_real_escape_string($connection, $username);
+
+        $find_orders_sql = "SELECT * FROM Orders WHERE username = '$username'";
+        $rows = execute_query($connection, $find_orders_sql);
+        return mysqli_num_rows($rows) > 0;
+    }
 
     function find_all_orders_by_username($username) {
         $connection = create_connection();

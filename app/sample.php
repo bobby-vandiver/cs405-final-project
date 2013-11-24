@@ -18,15 +18,19 @@
 //    $role = get_role("bob");
 //    printf("role: %s</br>", $role);
 
-    $orderId = 15;
+    $orderId = 20;
     $status = 0;
     $time = '20131123';
     $total = 13.44;
     $username = 'customer_0';
 
-    //create_order($orderId, $status, $time, $total, $username);
-
 	$isbn = '95';
+
+    create_order($orderId, $status, $time, $total, $username);
+    create_order_item($orderId, '95', 1, $total / 2);
+    create_order_item($orderId, '28', 1, $total / 2);
+
+
 	$item = get_item($isbn);
 //    var_dump($item);
 
