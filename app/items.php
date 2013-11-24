@@ -2,18 +2,8 @@
     include 'bootstrap.php';
     head("Items");
 
-    const TOY = 0;
-    const GAME = 1;
-
-    function type_to_string($type) {
-        if($type == TOY) {
-            return "Toy";
-        }
-        else {
-            return "Game";
-        }
-    }
- ?>
+    require_once 'item-utils.php';
+?>
 
 <body>
     <?php include 'navbar.php'; ?>

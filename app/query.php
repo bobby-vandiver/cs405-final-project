@@ -1,5 +1,7 @@
 <?php
-    include 'database.php';
+    require_once 'database.php';
+    require_once 'item-utils.php';
+
     /*
        This file contains all of the
        interactions with the database.
@@ -443,4 +445,115 @@
 			return "Orders not found.";
 		}
     }
+
+    // ======================
+    // Recommendation queries
+    // ======================
+
+    function top_items_at_or_below_price($price, $type, $count) {
+        $connection = create_connection();
+        
+        $top_items_sql = "SELECT isbn FROM Items WHERE price <= $price AND type = $type ORDER BY price DESC LIMIT $count";
+        return execute_query($connection, $top_items_sql);
+    }
+
+    function average_price_of_viewed_items($username) {
+        $connection = create_connection();
+        $username = mysqli_real_escape_string($connection, $username);
+
+        $average_price_sql = "SELECT AVG(price) AS avg_price FROM BrowsingHistory NATURAL JOIN Items WHERE username = '$username'";
+        $result = execute_query($connection, $average_price_sql);
+
+        if($result === NULL) {
+            return 0;
+        }
+
+        $row = mysqli_fetch_array($result);
+        $average = $row['avg_price'];
+
+        if($average === NULL) {
+            $average = 0;
+        }
+
+        return $average;
+    }
+
+    function toys_viewed($username) {
+        return items_viewed($username, TOY);
+    }
+
+    function games_viewed($username) {
+        return items_viewed($username, GAME);
+    }
+
+    function items_viewed($username, $type) {
+        $connection = create_connection();
+        $username = mysqli_real_escape_string($connection, $username);
+
+        $items_viewed_sql = "SELECT SUM(views) AS total_views FROM BrowsingHistory NATURAL JOIN Items WHERE username = '$username' AND type = $type";
+        $result = execute_query($connection, $items_viewed_sql);
+
+        if($result === NULL) {
+            return 0;
+        }
+
+        $row = mysqli_fetch_array($result);
+        $total_views = $row['total_views'];
+
+        if($total_views === NULL) {
+            $total_views = 0;
+        }
+
+        return $total_views;
+    }
+
+    function average_price_of_ordered_items($username) {
+        $connection = create_connection();
+        $username = mysqli_real_escape_string($connection, $username);
+
+        $average_price_sql = "SELECT AVG(salePrice) AS avg_price FROM Orders NATURAL JOIN OrderItems WHERE username = '$username'";
+        $result = execute_query($connection, $average_price_sql);
+
+        if($result === NULL) {
+            return 0;
+        }
+
+        $row = mysqli_fetch_array($result);
+        $average = $row['avg_price'];
+
+        if($average === NULL) {
+            $average = 0;
+        }
+
+        return $average;
+    }
+
+    function ordered_toys_count($username) {
+        return count_items_ordered($username, TOY);
+    }
+
+    function ordered_games_count($username) {
+        return count_items_ordered($username, GAME);
+    }
+
+    function count_items_ordered($username, $type) {
+        $connection = create_connection();
+        $username = mysqli_real_escape_string($connection, $username);
+        
+        $ordered_toys_count_sql = "SELECT COUNT(*) AS count FROM Orders NATURAL JOIN OrderItems NATURAL JOIN Items WHERE username = '$username' AND type = $type";
+        $result = execute_query($connection, $ordered_toys_count_sql);
+
+        if($result === NULL) {
+            return 0;
+        }
+
+        $row = mysqli_fetch_array($result);
+        $count = $row['count'];
+
+        if($count === NULL) {
+            $count = 0;
+        }
+
+        return $count;
+     }
 ?>
