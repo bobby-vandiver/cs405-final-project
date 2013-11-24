@@ -31,7 +31,10 @@
                 <table class="table table-bordered table-striped">
                     <tr><td>Name: <?php echo $item['name']; ?></td></tr>
                     <tr><td>Price: <?php echo effective_price($item['price'], $item['promotion']); ?></td></tr>
-                    <tr><td>Views: <?php echo $views; ?></td></tr>
+                    <?php
+                        if(user_is_logged_in()) { ?>
+                        <tr><td>Views: <?php echo $views; ?></td></tr>
+                    <?php } ?>
                 </table>
                 <form class="form-inline" role="form" id="add_to_cart_form">
                     <div class="form-group">
