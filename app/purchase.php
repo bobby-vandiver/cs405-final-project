@@ -13,7 +13,7 @@
 	$isLoggedIn = user_is_logged_in();
 	
 	if (!$isLoggedIn) {
-		header("Location: 'sign-in.php'");
+		header("Location: sign-in.php");
 	}
 	
 ?>
@@ -47,25 +47,56 @@
 				print "</tbody>";
 			?>
 		</table>
+		<a class="btn btn-success" onclick="purchaseCart()">Place Order</a>
+		<a class="btn btn-danger" onclick="dropCart()">Delete All Items in Cart</a>
 	</div>
+	<?php include 'footer.php';?>
 	
 <script>
 	function deleteItem(field) {
 		var item = $(field).parent('td').parent('tr').children('td');
 		var thisIsbn = item[0].innerHTML;
 		var thisQty = item[2].innerHTML;
-		$.post("updateCart.php", {isbn: thisIsbn, qty: thisQty, action: "removeItem"});
+		$.ajax({
+			type: "POST",
+			url: "updateCart.php",
+			dataType: "text",
+			data: {isbn: thisIsbn, qty: "0", action: "removeItem"},
+			async: false,
+		}).done(function ( data ) {
+				document.location = "purchase.php";
+		});
 	}
 	
 	function changeQuantity(field) {
-		var item = $(field).parent('td').parent('tr').children('td');
+		var item = $(field).parent('tr').children('td');
 		var thisIsbn = item[0].innerHTML;
 		var thisQty = item[2].innerHTML;
-		$.post("updateCart.php", {isbn: thisIsbn, qty: thisQty, action: "updateQuantity"});
+		if (thisQty >= 0) {
+			$.ajax({
+				type: "POST",
+				url: "updateCart.php",
+				dataType: "text",
+				data: {isbn: thisIsbn, qty: thisQty, action: "updateQuantity"},
+				async: false,
+			}).done(function ( data ) {
+					document.location = "purchase.php";
+			});
+		}
+		else {
+			alert('Enter a quantity > 0.');
+		}
 	}
 	
-	function dropCart(field) {
-		$.post("updateCart.php", {isbn: thisIsbn, qty: thisQty, action: "dropCart"});
-		document.location = "index.php";
+	function dropCart() {
+		$.ajax({
+			type: "POST",
+			url: "updateCart.php",
+			dataType: "text",
+			data: {isbn: "0", qty: "0", action: "dropCart"},
+			async: false,
+		}).done(function ( data ) {
+				document.location = "index.php";
+		});
 	}
 </script>

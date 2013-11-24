@@ -16,13 +16,16 @@
 
 		save_cart_to_session($cart_items);
 	}
+	
 
 	function remove_item_in_cart($isbn, $quantity = 1) {
 		$cart_items = get_items_from_session();
-
 		if(array_key_exists($isbn, $cart_items)) {
 			if($cart_items[$isbn] > 0) {
-				$cart_items[$isbn] -= $quantity;
+				$cart_items[$isbn] = $quantity;
+				if ($cart_items[$isbn] < 1) {
+					unset($cart_items[$isbn]);
+				}
 			}
 			else {
 				unset($cart_items[$isbn]);
