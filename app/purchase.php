@@ -39,7 +39,7 @@
 						print "<tr>";
 						print "<td>" . $itemData['isbn'] . "</td>";
 						print "<td>" . $itemData['name'] . "</td>";
-						print "<td>" . $qty . "</td>";
+						print "<td contenteditable=\"true\" onblur=\"changeQuantity(this)\">" . $qty . "</td>";
 						print "<td>" . money_format('$%i', ($itemData['price'] * $itemData['promotion'])) . "</td>";
 						print "<td><a class=\"btn btn-danger\" onclick=\"deleteItem(this)\">Remove Item</a></td>";
 						print "</tr>";
@@ -48,3 +48,24 @@
 			?>
 		</table>
 	</div>
+	
+<script>
+	function deleteItem(field) {
+		var item = $(field).parent('td').parent('tr').children('td');
+		var thisIsbn = item[0].innerHTML;
+		var thisQty = item[2].innerHTML;
+		$.post("updateCart.php", {isbn: thisIsbn, qty: thisQty, action: "removeItem"});
+	}
+	
+	function changeQuantity(field) {
+		var item = $(field).parent('td').parent('tr').children('td');
+		var thisIsbn = item[0].innerHTML;
+		var thisQty = item[2].innerHTML;
+		$.post("updateCart.php", {isbn: thisIsbn, qty: thisQty, action: "updateQuantity"});
+	}
+	
+	function dropCart(field) {
+		$.post("updateCart.php", {isbn: thisIsbn, qty: thisQty, action: "dropCart"});
+		document.location = "index.php";
+	}
+</script>
