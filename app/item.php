@@ -25,18 +25,22 @@
         }
     ?>
 
-    <div class="container" style="text-align:center">
+    <div class="container">
         <div class="row">
-            <div>Name: <?php echo $item['name']; ?></div>
-            <div>Price: <?php echo effective_price($item['price'], $item['promotion']); ?></div>
-            <div>Views: <?php echo $views; ?></div>
-        </div>
-        <form class="form-inline" role="form" id="add_to_cart_form">
-            <div class="form-group">
-                <input type="number" class="form-control" id="quantity_to_add" min="1" value="1">
-                <button type="button" class="btn btn-default" type="submit" id="add_button">Add to Cart</button>
+            <div class="span3" style="float: none; margin: 0 auto;">
+                <table class="table table-bordered table-striped">
+                    <tr><td>Name: <?php echo $item['name']; ?></td></tr>
+                    <tr><td>Price: <?php echo effective_price($item['price'], $item['promotion']); ?></td></tr>
+                    <tr><td>Views: <?php echo $views; ?></td></tr>
+                </table>
+                <form class="form-inline" role="form" id="add_to_cart_form">
+                    <div class="form-group">
+                        <input type="number" class="form-control" id="quantity_to_add" min="1" value="1">
+                        <button type="button" class="btn btn-default" type="submit" id="add_button">Add to Cart</button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     </div>
     
     <?php include 'footer.php'; ?>
