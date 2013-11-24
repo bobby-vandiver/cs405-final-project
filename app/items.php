@@ -1,9 +1,6 @@
 <?php
     include 'bootstrap.php';
-
-   $inline_css = '<style>body { padding-top: 60px; } </style>';
- 
-    head("Items", $inline_css);
+    head("Items");
 
     const TOY = 0;
     const GAME = 1;

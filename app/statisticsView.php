@@ -1,5 +1,6 @@
 <?php
-include 'bootstrap.php';	
+    include 'bootstrap.php';	
+	head("Chico's Toy Store");
 ?>
 <body>
 
@@ -17,10 +18,6 @@ include 'bootstrap.php';
 	else {
 		$results = find_sales_in_past_year($sort);
 	}
-
-	$inline_css = '<style>body { padding-top: 60px; } </style>';
-
-	head("Chico's Toy Store", $inline_css);
 
 ?>
 	<div class="container">

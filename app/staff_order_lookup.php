@@ -1,5 +1,6 @@
 <?php
-include 'bootstrap.php';	
+    include 'bootstrap.php';	
+	head("Chico's Toy Store");
 ?>
 <body>
 
@@ -23,11 +24,6 @@ include 'bootstrap.php';
 	elseif (isset($orderStatus)) {
 		$results = find_all_orders_by_status($orderStatus);
 	}
-
-	$inline_css = '<style>body { padding-top: 60px; } </style>';
-
-	head("Chico's Toy Store", $inline_css);
-
 ?>
 	<div class="container">
 		<div class="row-fluid span12">

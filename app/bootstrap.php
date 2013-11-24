@@ -2,6 +2,19 @@
 
 function head($title, $inline_css) {
 
+    $default_css= '
+        <style>
+            body {
+                padding-top: 40px;
+                padding-bottom: 40px;
+                background-color: #f5f5f5;
+            }
+        </style>';
+
+    if(!$inline_css) {
+        $inline_css = $default_css;
+    }
+
     echo '
     <!DOCTYPE html>
     <html lang="en">
