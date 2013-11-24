@@ -9,15 +9,23 @@
     <?php include 'navbar.php' ?>
 
     <div class="container">
-
-      <form class="form-signin" action="login.php" method="post" id="signin-form">
-        <h2 class="form-signin-heading">Please sign in</h2>
-        <input type="text" class="input-block-level" name="username" placeholder="Username">
-        <input type="password" class="input-block-level" name="password" placeholder="Password">
-        <button class="btn btn-large btn-primary" type="submit">Sign in</button>
-      </form>
-
-    </div> <!-- /container -->
+        <div class="row">
+            <div class="span6">
+                <form class="form-signin" action="login.php" method="post" id="signin-form">
+                    <h2 class="form-signin-heading">Please sign in</h2>
+                    <input type="text" class="input-block-level" name="username" placeholder="Username">
+                    <input type="password" class="input-block-level" name="password" placeholder="Password">
+                    <button class="btn btn-large btn-default" type="submit">Sign in</button>
+                </form>
+            </div>
+            <div class="span6">
+                <div class="form-signin">
+                    <h2>Don't have an account?</h2>
+                    <button class="btn btn-large btn-default" id="register-button">Register</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <?php include 'footer.php'; ?>
 
@@ -36,6 +44,10 @@
                     maxlength: MAX_STRING_LENGTH
                 }
             },
+        });
+
+        $('#register-button').click(function() {
+            window.location.href = "register.php";
         });
     });
 
