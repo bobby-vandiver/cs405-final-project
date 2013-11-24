@@ -27,12 +27,17 @@
     $in_stock = item_in_stock($isbn);
 //    var_dump($in_stock);
 
+    update_browsing_history('customer_0', '95');
+
+    $views = item_views("customer_0", "95");
+    var_dump($views);
+
 
     $items_in_stock = get_all_items_in_stock();
 
     while($row = mysqli_fetch_array($items_in_stock)) {
-        var_dump($row);
-        echo "</br></br>";
+//        var_dump($row);
+//        echo "</br></br>";
     }
 
 //	add_item_to_cart($isbn, 13);

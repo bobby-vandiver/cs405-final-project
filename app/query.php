@@ -65,6 +65,7 @@
     // =========================
 
    function item_in_stock($isbn) {
+        $connection = create_connection();
         $isbn = mysqli_real_escape_string($connection, $isbn);
 
         $in_stock_sql = "SELECT quantity FROM Items WHERE isbn = '$isbn'";
@@ -76,20 +77,38 @@
 
     function item_views($username, $isbn) {
         $connection = create_connection();
-        $item_views_sql = "";
-        execute_query($connection, $item_views_sql);
+
+        $username = mysqli_real_escape_string($connection, $username);
+        $isbn = mysqli_real_escape_string($connection, $isbn);
+
+        $item_views_sql = "SELECT views FROM BrowsingHistory WHERE username = '$username' AND isbn = '$isbn'";
+        $result = execute_query($connection, $item_views_sql);
+
+        $row = mysqli_fetch_array($result);
+        $views = $row['views'];
+
+        if($views === NULL)
+            $views = 0;
+
+        return $views;
     }
 
     function update_browsing_history($username, $isbn) {
         $connection = create_connection();
+
+        $username = mysqli_real_escape_string($connection, $username);
+        $isbn = mysqli_real_escape_string($connection, $isbn);
+
         $views = item_views($username, $isbn);
         
         if($views > 0) {
-            $increment_item_view_sql = "";
+            $views = 1;
+            $increment_item_view_sql = "UPDATE BrowsingHistory SET views=$views WHERE username = '$username' AND isbn = '$isbn'";
             execute_query($connection, $increment_item_view_sql);
         }
         else {
-            $create_item_view_sql = "";
+            $views++;
+            $create_item_view_sql = "INSERT INTO BrowsingHistory (username, isbn, views) VALUES ('$username', '$isbn', $views)";
             execute_query($connection, $create_item_view_sql);
         }
     }
