@@ -192,15 +192,42 @@
     function create_order($orderId, $status, $time, $total, $username) {
         $connection = create_connection();
 
-        $create_order_sql = "";
+		$orderId = mysqli_real_escape_string($connection, $orderId);
+		$status = mysqli_real_escape_string($connection, $status);
+		$time = mysqli_real_escape_string($connection, $time);
+		$total = mysqli_real_escape_string($connection, $total);
+		$username = mysqli_real_escape_string($connection, $username);
+
+        $create_order_sql = "INSERT INTO Orders (orderId, status, time, total, username) VALUES ($orderId, $status, $time, $total, '$username')";
         execute_query($connection, $create_order_sql);
     }
 	
-	function create_order_item($isbn, $qty, $type, $price, $name, $promo) {
+	function create_order_item($orderId, $isbn, $qty, $salePrice) {
         $connection = create_connection();
 
-        $create_order_item_sql = "";
+		$orderId = mysqli_real_escape_string($connection, $orderId);
+		$isbn = mysqli_real_escape_string($connection, $isbn);
+		$qty = mysqli_real_escape_string($connection, $qty);
+		$salePrice = mysqli_real_escape_string($connection, $salePrice);
+
+        $create_order_item_sql = "INSERT INTO OrderItems (orderId, isbn, quantity, salePrice) VALUES ($orderId, '$isbn', $quantity, $salePrice)";
         execute_query($connection, $create_order_item_sql);
+    }
+
+    function find_all_orders_by_username($username) {
+        $connection = create_connection();
+		$username = mysqli_real_escape_string($connection, $username);
+
+        $find_all_orders_sql = "SELECT * FROM Orders WHERE username = '$username'";
+        return execute_query($connection, $find_all_orders_sql);
+    }
+
+    function get_order_items($orderId) {
+        $connection = create_connection();
+		$orderId = mysqli_real_escape_string($connection, $orderId);
+
+        $get_order_items_sql = "SELECT * FROM OrderItems WHERE orderId = $orderId";
+        return execute_query($connection, $get_order_items_sql);
     }
 	
 	function lookup_max_isbn() {
@@ -221,9 +248,13 @@
 
     function get_order_status($orderId) {
         $connection = create_connection();
+		$orderId = mysqli_real_escape_string($connection, $orderId);
 
-        $get_order_status_sql = "";
-        execute_query($connection, $get_order_status_sql);
+        $get_order_status_sql = "SELECT status FROM Orders WHERE orderId = $orderId";
+        $result = execute_query($connection, $get_order_status_sql);
+
+        $row =  mysqli_fetch_array($result);
+        return $row['status'];
     }
 
     function update_order_status($orderId, $status) {

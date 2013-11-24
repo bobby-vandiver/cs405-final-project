@@ -18,6 +18,14 @@
 //    $role = get_role("bob");
 //    printf("role: %s</br>", $role);
 
+    $orderId = 15;
+    $status = 0;
+    $time = '20131123';
+    $total = 13.44;
+    $username = 'customer_0';
+
+    //create_order($orderId, $status, $time, $total, $username);
+
 	$isbn = '95';
 	$item = get_item($isbn);
 //    var_dump($item);
@@ -27,10 +35,10 @@
     $in_stock = item_in_stock($isbn);
 //    var_dump($in_stock);
 
-    update_browsing_history('customer_0', '95');
+//   update_browsing_history('customer_0', '95');
 
     $views = item_views("customer_0", "95");
-    var_dump($views);
+//    var_dump($views);
 
 
     $items_in_stock = get_all_items_in_stock();
