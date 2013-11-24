@@ -33,7 +33,7 @@
 
                 while($row = mysqli_fetch_array($items)){
                     echo "<tr>";
-                    echo "  <td>" . $row['name'] . "</td>";
+                    echo "  <td><a href=\"item.php?isbn=" . $row['isbn'] ."\">" . $row['name'] . "</a></td>";
                     echo "  <td>" . $row['price'] . "</td>";
                     echo "  <td>" . type_to_string($row['type']) . "</td>";
                     echo "</tr>";
