@@ -117,44 +117,50 @@
         $connection = create_connection();
 		$isbn = mysqli_real_escape_string($connection, $isbn);
 
-        $get_item_sql = "SELECT * FROM Items Where isbn = $isbn";
+        $get_item_sql = "SELECT * FROM Items Where isbn = '$isbn'";
         return mysqli_fetch_assoc(execute_query($connection, $get_item_sql));
     }
 	
 	function update_inventory_item($isbn, $qty, $promotion) {
 		$connection = create_connection();
 
+		$isbn = mysqli_real_escape_string($connection, $isbn);
+		$qty = mysqli_real_escape_string($connection, $qty);
+		$promotion = mysqli_real_escape_string($connection, $promotion);
+
         $update_inventory_item_sql = "UPDATE Items
 			SET Items.quantity = $qty, Items.promotion = $promotion
-			WHERE Items.isbn = $isbn;";
+			WHERE Items.isbn = '$isbn';";
 		execute_query($connection, $update_inventory_item_sql);
 		return;
 	}
 	
 	function decrement_inventory_qty($isbn, $qty) {
 		$connection = create_connection();
+		$isbn = mysqli_real_escape_string($connection, $isbn);
 		
-		$rows = mysqli_fetch_assoc(execute_query($connection, "select quantity from Items where isbn = $isbn;"));
+		$rows = mysqli_fetch_assoc(execute_query($connection, "select quantity from Items where isbn = '$isbn';"));
 		$startingQty = $rows['quantity'];
 		$endingQty = $startingQty - $qty;
 
         $update_inventory_item_sql = "UPDATE Items
 			SET Items.quantity = $endingQty
-			WHERE Items.isbn = $isbn;";
+			WHERE Items.isbn = '$isbn';";
 		execute_query($connection, $update_inventory_item_sql);
 		return;
 	}
 	
 	function increment_inventory_qty($isbn, $qty) {
 		$connection = create_connection();
+		$isbn = mysqli_real_escape_string($connection, $isbn);
 		
-		$rows = mysqli_fetch_assoc(execute_query($connection, "select quantity from Items where isbn = $isbn;"));
+		$rows = mysqli_fetch_assoc(execute_query($connection, "select quantity from Items where isbn = '$isbn';"));
 		$startingQty = $rows['quantity'];
 		$endingQty = $startingQty + $qty;
 
         $update_inventory_item_sql = "UPDATE Items
 			SET Items.quantity = $endingQty
-			WHERE Items.isbn = $isbn;";
+			WHERE Items.isbn = '$isbn';";
 		execute_query($connection, $update_inventory_item_sql);
 		return;
 	}
@@ -223,6 +229,9 @@
     function update_order_status($orderId, $status) {
         $connection = create_connection();
 
+		$orderId = mysqli_real_escape_string($connection, $orderId);
+		$status = mysqli_real_escape_string($connection, $status);
+
         $update_status_sql = "UPDATE Orders
 			SET Orders.status = $status
 			WHERE Orders.orderId = $orderId;";
@@ -232,6 +241,7 @@
 	
 	function check_order_quantities($orderId) {
 		$connection = create_connection();
+		$orderId = mysqli_real_escape_string($connection, $orderId);
 
         $get_isbns_qty_in_order_sql = "select oi.isbn, i.quantity AS qty, oi.quantity 
 		from OrderItems AS oi, Items AS i 
@@ -252,6 +262,7 @@
 
     function find_all_orders_by_username($username) {
         $connection = create_connection();
+		$username = mysqli_real_escape_string($connection, $username);
 
         $find_all_orders_by_username_sql = "select o.username, o.orderId, o.status, o.time, o.total, oi.isbn, i.name, oi.salePrice, oi.quantity 
 		from Orders AS o, OrderItems AS oi, Items AS i
@@ -272,8 +283,15 @@
 	 function add_item_to_inventory($isbn, $qty, $type, $price, $name, $promo) {
         $connection = create_connection();
 
+		$isbn = mysqli_real_escape_string($connection, $isbn);
+		$qty = mysqli_real_escape_string($connection, $qty);
+		$type = mysqli_real_escape_string($connection, $type);
+		$price = mysqli_real_escape_string($connection, $price);
+		$name = mysqli_real_escape_string($connection, $name);
+		$promo = mysqli_real_escape_string($connection, $promo);
+
         $add_item_to_inventory_sql = "INSERT INTO Items
-		VALUES ($isbn, $qty, $price, $type, '$name', $promo);";
+		VALUES ('$isbn', $qty, $price, $type, '$name', $promo);";
         execute_query($connection, $add_item_to_inventory_sql);
 		if (mysqli_error($connection) != null) {
 			echo $create_order_item_sql . "\n";
@@ -284,6 +302,8 @@
 	
 	function find_all_orders_by_status($status) {
         $connection = create_connection();
+		$status = mysqli_real_escape_string($connection, $status);
+
 		if ($status === '0') {
 			$whereClause = "and o.status = 0;";
 		}
@@ -308,6 +328,9 @@
     function find_all_orders_by_date($date1, $date2) {
         $connection = create_connection();
 
+		$date1 = mysqli_real_escape_string($connection, $date1);
+		$date2 = mysqli_real_escape_string($connection, $date2);
+
         $find_all_by_date_sql = "select o.username, o.orderId, o.status, o.time, o.total, oi.isbn, i.name, oi.salePrice, oi.quantity 
 		from Orders AS o, OrderItems AS oi, Items AS i
 		where o.orderId = oi.orderId and oi.isbn = i.isbn and date(o.Time) > $date1 AND date(o.Time) < $date2;";
@@ -322,6 +345,7 @@
 
     function find_all_order_items_by_order_id($orderId) {
         $connection = create_connection();
+		$orderId = mysqli_real_escape_string($connection, $orderId);
 
         $find_all_by_order_id_sql = "select o.username, o.orderId, o.status, o.time, o.total, oi.isbn, i.name, oi.salePrice, oi.quantity 
 		from Orders AS o, OrderItems AS oi, Items AS i
@@ -341,6 +365,7 @@
 	
 	function find_sales_in_past_week($sort) {
         $connection = create_connection();
+		$sort = mysqli_real_escape_string($connection, $sort);
 		
         $find_sales_in_past_week_sql = "select distinct(Items.isbn), Items.name, sum(ois.quantity) from Items left join (select OrderItems.isbn, OrderItems.quantity from OrderItems join Orders on OrderItems.orderId = Orders.orderId where Orders.time >= date_sub(CURDATE(), INTERVAL 7 DAY)) as ois on ois.isbn = Items.isbn group by Items.isbn order by cast($sort;";
 		$rows = execute_query($connection, $find_sales_in_past_week_sql);
@@ -354,6 +379,7 @@
 	
 	function find_sales_in_past_month($sort) {
         $connection = create_connection();
+		$sort = mysqli_real_escape_string($connection, $sort);
 
         $find_sales_in_past_month_sql = "select distinct(Items.isbn), Items.name, sum(ois.quantity) from Items left join (select OrderItems.isbn, OrderItems.quantity from OrderItems join Orders on OrderItems.orderId = Orders.orderId where Orders.time >= date_sub(CURDATE(), INTERVAL 30 DAY)) as ois on ois.isbn = Items.isbn group by Items.isbn order by cast($sort;";
 		$rows = execute_query($connection, $find_sales_in_past_month_sql);
@@ -367,6 +393,7 @@
 	
 	function find_sales_in_past_year($sort) {
         $connection = create_connection();
+		$sort = mysqli_real_escape_string($connection, $sort);
 
         $find_sales_in_past_year_sql = "select distinct(Items.isbn), Items.name, sum(ois.quantity) from Items left join (select OrderItems.isbn, OrderItems.quantity from OrderItems join Orders on OrderItems.orderId = Orders.orderId where Orders.time >= date_sub(CURDATE(), INTERVAL 365 DAY)) as ois on ois.isbn = Items.isbn group by Items.isbn order by cast($sort;";
 		$rows = execute_query($connection, $find_sales_in_past_year_sql);
