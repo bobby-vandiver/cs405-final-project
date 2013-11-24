@@ -1,6 +1,6 @@
 <?php
 
-function head($title, $inline_css) {
+function head($title, $inline_css = NULL) {
 
     $default_css= '
         <style>
