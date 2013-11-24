@@ -214,14 +214,6 @@
         execute_query($connection, $create_order_item_sql);
     }
 
-    function find_all_orders_by_username($username) {
-        $connection = create_connection();
-		$username = mysqli_real_escape_string($connection, $username);
-
-        $find_all_orders_sql = "SELECT * FROM Orders WHERE username = '$username'";
-        return execute_query($connection, $find_all_orders_sql);
-    }
-
     function get_order_items($orderId) {
         $connection = create_connection();
 		$orderId = mysqli_real_escape_string($connection, $orderId);
