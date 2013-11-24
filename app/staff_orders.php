@@ -9,7 +9,12 @@ include 'bootstrap.php';
 
 <body>
 
-    <?php include 'navbar.php' ?>
+    <?php
+        include 'navbar.php';
+        require_once 'auth-utils.php';
+
+        redirect_if_not_staff();
+    ?>
 	<form class="form-horizontal" action="staff_order_lookup.php" method="POST" enctype="application/x-www-form-urlencoded"
 		<fieldset>
 		<!-- Form Name -->

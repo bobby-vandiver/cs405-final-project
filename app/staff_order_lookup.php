@@ -4,7 +4,12 @@
 ?>
 <body>
 
-<?php include 'navbar.php';
+<?php
+    include 'navbar.php';
+    require 'auth-utils.php';
+
+    redirect_if_not_staff();
+
 	$orderNumber =  $_POST['orderID'];
 	$orderStatus = $_POST['status'];
 	$customer = $_POST['customer'];

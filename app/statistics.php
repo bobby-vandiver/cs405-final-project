@@ -2,12 +2,13 @@
     include 'bootstrap.php';
     head("Chico's Toy Store");
 ?>
-
-
-
 <body>
+    <?php
+        include 'navbar.php';
+        require_once 'auth-utils.php';
 
-    <?php include 'navbar.php' ?>
+        redirect_if_not_admin();
+    ?>
 	<form class="form-horizontal" action="statisticsView.php" method="POST" enctype="application/x-www-form-urlencoded"
 		<fieldset>
 		<!-- Form Name -->

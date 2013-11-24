@@ -4,7 +4,12 @@
 ?>
 <body>
 
-<?php include 'navbar.php';
+<?php
+    include 'navbar.php';
+    require_once 'auth-utils.php';
+
+    redirect_if_not_admin();
+
 	$interval =  $_POST['interval'];
 	$sort = $_POST['sort'];
 	$results;

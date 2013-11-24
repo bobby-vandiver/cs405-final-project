@@ -2,12 +2,14 @@
     include 'bootstrap.php';
     head("Chico's Toy Store");
 ?>
-
-
 <body>
 
 	<?php 
 		include 'navbar.php';
+        include 'auth-utils.php';
+
+        redirect_if_not_staff();
+
 		if (logged_in_user_is_admin()) {
 			$can_set_promotion = "contenteditable=\"true\" onblur=\"updateEvent(this)\"";
 		}
