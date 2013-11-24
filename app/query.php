@@ -102,12 +102,12 @@
         $views = item_views($username, $isbn);
         
         if($views > 0) {
-            $views = 1;
+            $views++;
             $increment_item_view_sql = "UPDATE BrowsingHistory SET views=$views WHERE username = '$username' AND isbn = '$isbn'";
             execute_query($connection, $increment_item_view_sql);
         }
         else {
-            $views++;
+            $views = 1;
             $create_item_view_sql = "INSERT INTO BrowsingHistory (username, isbn, views) VALUES ('$username', '$isbn', $views)";
             execute_query($connection, $create_item_view_sql);
         }

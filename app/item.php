@@ -10,6 +10,15 @@
         $isbn = $_GET['isbn'];
         $item = get_item($isbn);
 
+        $views = 0;
+
+        // Update the user's browsing history if they're logged in
+        if(user_is_logged_in()) {
+            $username = get_logged_in_user();
+            update_browsing_history($username, $isbn);
+            $views = item_views($username, $isbn);
+        }
+
         function effective_price($price, $promotion) {
             $total = $price * $promotion;
             return number_format($total, 2, '.', ',');
@@ -20,6 +29,7 @@
         <div class="row">
             <div>Name: <?php echo $item['name']; ?></div>
             <div>Price: <?php echo effective_price($item['price'], $item['promotion']); ?></div>
+            <div>Views: <?php echo $views; ?></div>
         </div>
         <form class="form-inline" role="form" id="add_to_cart_form">
             <div class="form-group">
