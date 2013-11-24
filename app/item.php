@@ -51,7 +51,7 @@
     <script>
         $("#add_button").click(function() {
             var quantity = $("#quantity_to_add").val();
-            var isbn = <?php echo $isbn; ?>;
+            var isbn = <?php echo "'$isbn'"; ?>;
             
             $.post("add_to_cart.php", { 'isbn': isbn, 'quantity': quantity })
                 .done(function() {
