@@ -9,12 +9,11 @@
 
     <div class="container">
 
-      <h1>Bootstrap starter template</h1>
-      <p>Use this document as a way to quick start any new project.<br> All you get is this message and a barebones HTML document.</p>
+      <h1>Welcome to BJ's Toys and Games</h1>
+      
+      <p>Inside you'll find a selection of premium toys and games created in our overseas factories. You can buy with confidence knowing that all of our items are kid safe and kid friendly. All of our items are built by kids. For kids.</p>
 
-      <?php echo "<p>This is some hot PHP generated text.</p>" ?>
-
-    </div> <!-- /container -->
+    </div>
 
     <?php include 'footer.php'; ?>
 
