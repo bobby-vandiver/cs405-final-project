@@ -22,10 +22,10 @@
         <input type="text" class="input-block-level" name="state" placeholder="State">
         <input type="text" class="input-block-level" name="zip" placeholder="Zip">
         
-        <button class="btn btn-large btn-primary" type="submit">Sign in</button>
+        <button class="btn btn-large btn-default" type="submit">Register</button>
       </form>
 
-    </div> <!-- /container -->
+    </div>
 
     <?php include 'footer.php'; ?>
 
