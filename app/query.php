@@ -191,16 +191,15 @@
     // Order related queries
     // =====================
 
-    function create_order($orderId, $status, $time, $total, $username) {
+    function create_order($orderId, $status, $total, $username) {
         $connection = create_connection();
 
 		$orderId = mysqli_real_escape_string($connection, $orderId);
 		$status = mysqli_real_escape_string($connection, $status);
-		$time = mysqli_real_escape_string($connection, $time);
 		$total = mysqli_real_escape_string($connection, $total);
 		$username = mysqli_real_escape_string($connection, $username);
 
-        $create_order_sql = "INSERT INTO Orders (orderId, status, time, total, username) VALUES ($orderId, $status, $time, $total, '$username')";
+        $create_order_sql = "INSERT INTO Orders VALUES('$orderId', '$status', NULL, '$total', '$username')";
         execute_query($connection, $create_order_sql);
     }
 	
@@ -212,8 +211,21 @@
 		$qty = mysqli_real_escape_string($connection, $qty);
 		$salePrice = mysqli_real_escape_string($connection, $salePrice);
 
-        $create_order_item_sql = "INSERT INTO OrderItems (orderId, isbn, quantity, salePrice) VALUES ($orderId, '$isbn', $qty, $salePrice)";
+        $create_order_item_sql = "INSERT INTO OrderItems VALUES ('$orderId', '$isbn', '$qty', '$salePrice')";
         execute_query($connection, $create_order_item_sql);
+    }
+	
+	function update_order_total($orderId, $total) {
+        $connection = create_connection();
+
+		$orderId = mysqli_real_escape_string($connection, $orderId);
+		$status = mysqli_real_escape_string($connection, $status);
+		$time = mysqli_real_escape_string($connection, $time);
+		$total = mysqli_real_escape_string($connection, $total);
+		$username = mysqli_real_escape_string($connection, $username);
+
+        $create_order_sql = "UPDATE Orders SET total=$total WHERE orderId = $orderId;";
+        execute_query($connection, $create_order_sql);
     }
 
     function find_all_order_summaries_by_username($username) {
@@ -230,6 +242,15 @@
         $get_order_items_sql = "SELECT * FROM OrderItems WHERE orderId = $orderId";
         return execute_query($connection, $get_order_items_sql);
     }
+	
+	function lookup_max_orderId() {
+		$connection = create_connection();
+
+        $lookup_max_orderId_sql = "select max(orderId) from Orders;";
+        $rows = mysqli_fetch_assoc(execute_query($connection, $lookup_max_orderId_sql));
+		$orderId = $rows['max(orderId)'];
+		return $orderId;
+	}
 	
 	function lookup_max_isbn() {
 		$connection = create_connection();

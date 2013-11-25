@@ -48,10 +48,11 @@
             <div class="nav-collapse collapse">
                 <ul class="nav">
                     <li class="active"><a href="index.php">Home</a></li>
-                    <li><a href="items.php">Items</a></li>
+                    <li><a href="items.php">Items</a></li>			
                     <?php display_customer_only_links(); ?>
                     <?php display_staff_links(); ?>
 					<?php display_admin_links(); ?>
+					<li><a href="purchase.php">Checkout</a></li>
                     <?php display_login_or_welcome(); ?>
                </ul>
             </div><!--/.nav-collapse -->

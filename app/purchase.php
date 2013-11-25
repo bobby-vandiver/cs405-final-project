@@ -99,4 +99,16 @@
 				document.location = "index.php";
 		});
 	}
+	
+	function purchaseCart() {
+		$.ajax({
+			type: "POST",
+			url: "updateCart.php",
+			dataType: "text",
+			data: {isbn: "0", qty: "0", action: "purchaseCart"},
+			async: false,
+		}).done(function ( data ) {
+				document.location = "index.php";
+		});
+	}
 </script>
