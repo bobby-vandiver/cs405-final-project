@@ -101,14 +101,19 @@
 	}
 	
 	function purchaseCart() {
-		$.ajax({
-			type: "POST",
-			url: "updateCart.php",
-			dataType: "text",
-			data: {isbn: "0", qty: "0", action: "purchaseCart"},
-			async: false,
-		}).done(function ( data ) {
-				document.location = "index.php";
-		});
+		if ($('tbody').children().length == 0) {
+			alert("Select an item before attempting to complete a purchase");
+		}
+		else {
+			$.ajax({
+				type: "POST",
+				url: "updateCart.php",
+				dataType: "text",
+				data: {isbn: "0", qty: "0", action: "purchaseCart"},
+				async: false,
+			}).done(function ( data ) {
+					document.location = "index.php";
+			});
+		}
 	}
 </script>

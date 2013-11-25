@@ -33,8 +33,8 @@
 			  <label class="control-label" for="sort">Sort By:</label>
 			  <div class="controls">
 				<select id="sort" name="sort" class="input-xlarge">
-				  <option value="Items.isbn as unsigned) asc">Item ISBN</option>
-				  <option value="sum(ois.quantity) as unsigned) desc">Number Sold</option>
+				  <option value="items">Item ISBN</option>
+				  <option value="numbers">Number Sold</option>
 				</select>
 			  </div>
 			</div>
