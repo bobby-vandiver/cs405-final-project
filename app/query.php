@@ -450,8 +450,17 @@
 	function find_sales_in_past_month($sort) {
         $connection = create_connection();
 		$sort = mysqli_real_escape_string($connection, $sort);
+		
+		$sortOrder = "";
+		
+		if($sort === "items") {
+			$sortOrder =  "cast(Items.isbn as unsigned) asc";
+		}
+		else {
+			$sortOrder =  "sum(ois.quantity) as unsigned) desc";
+		}
 
-        $find_sales_in_past_month_sql = "select distinct(Items.isbn), Items.name, sum(ois.quantity) from Items left join (select OrderItems.isbn, OrderItems.quantity from OrderItems join Orders on OrderItems.orderId = Orders.orderId where Orders.time >= date_sub(CURDATE(), INTERVAL 30 DAY)) as ois on ois.isbn = Items.isbn group by Items.isbn order by cast($sort;";
+        $find_sales_in_past_month_sql = "select distinct(Items.isbn), Items.name, sum(ois.quantity) from Items left join (select OrderItems.isbn, OrderItems.quantity from OrderItems join Orders on OrderItems.orderId = Orders.orderId where Orders.time >= date_sub(CURDATE(), INTERVAL 30 DAY)) as ois on ois.isbn = Items.isbn group by Items.isbn order by $sortOrder;";
 		$rows = execute_query($connection, $find_sales_in_past_month_sql);
 		if (mysqli_num_rows($rows) > 0) {
 			return $rows;
@@ -464,8 +473,17 @@
 	function find_sales_in_past_year($sort) {
         $connection = create_connection();
 		$sort = mysqli_real_escape_string($connection, $sort);
+		
+		$sortOrder = "";
+		
+		if($sort === "items") {
+			$sortOrder =  "cast(Items.isbn as unsigned) asc";
+		}
+		else {
+			$sortOrder =  "sum(ois.quantity) as unsigned) desc";
+		}
 
-        $find_sales_in_past_year_sql = "select distinct(Items.isbn), Items.name, sum(ois.quantity) from Items left join (select OrderItems.isbn, OrderItems.quantity from OrderItems join Orders on OrderItems.orderId = Orders.orderId where Orders.time >= date_sub(CURDATE(), INTERVAL 365 DAY)) as ois on ois.isbn = Items.isbn group by Items.isbn order by cast($sort;";
+        $find_sales_in_past_year_sql = "select distinct(Items.isbn), Items.name, sum(ois.quantity) from Items left join (select OrderItems.isbn, OrderItems.quantity from OrderItems join Orders on OrderItems.orderId = Orders.orderId where Orders.time >= date_sub(CURDATE(), INTERVAL 365 DAY)) as ois on ois.isbn = Items.isbn group by Items.isbn order by $sortOrder;";
 		$rows = execute_query($connection, $find_sales_in_past_year_sql);
 		if (mysqli_num_rows($rows) > 0) {
 			return $rows;
