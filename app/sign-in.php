@@ -20,7 +20,7 @@
             </div>
             <div class="span6">
                 <div class="form-signin">
-                    <h2>Don't have an account?</h2>
+                    <h3>Don't have an account?</h3>
                     <button class="btn btn-large btn-default" id="register-button">Register</button>
                 </div>
             </div>
