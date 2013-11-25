@@ -30,7 +30,7 @@
         <p>Inside you'll find a selection of premium toys and games created in our overseas factories. You can buy with confidence knowing that all of our items are kid safe and kid friendly. All of our items are built by kids. For kids.</p>
 
         <?php
-            if(user_is_logged_in()) {
+            if(user_is_logged_in() && logged_in_user_is_customer()) {
                 $username = get_logged_in_user();
                 $recommended_items = get_recommended_items($username);
 
