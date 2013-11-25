@@ -305,12 +305,7 @@
 				return 'false';
 			}
 		}
-		if (mysqli_error($connection) != null) {
-			return $get_isbns_qty_in_order_sql . mysqli_error($connection);
-		}
-		else {
-			return 'true';
-		}
+		return 'true';
 	}
 
     function user_has_orders($username) {
@@ -330,10 +325,6 @@
 		from Orders AS o, OrderItems AS oi, Items AS i
 		where o.orderId = oi.orderId and oi.isbn = i.isbn and o.username = '$username';";
         $rows = execute_query($connection, $find_all_orders_by_username_sql);
-		if (mysqli_error($connection) != null) {
-			echo $find_all_orders_by_username_sql . "\n";
-			echo "Error creating record: " . mysqli_error($connection) . "\n";
-		}
 		if (mysqli_num_rows($rows) > 0) {
 			return $rows;
 		}
@@ -355,10 +346,6 @@
         $add_item_to_inventory_sql = "INSERT INTO Items
 		VALUES ('$isbn', $qty, $price, $type, '$name', $promo);";
         execute_query($connection, $add_item_to_inventory_sql);
-		if (mysqli_error($connection) != null) {
-			echo $create_order_item_sql . "\n";
-			echo "Error creating record: " . mysqli_error($connection) . "\n";
-		}
 		return;
     }
 	
