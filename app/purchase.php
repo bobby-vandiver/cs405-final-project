@@ -7,7 +7,7 @@
 
 	$inline_css = '<style>body { padding-top: 60px; } </style>';
 
-    head("Chico's Toy Store", $inline_css);
+    head("Finalize Purchases", $inline_css);
 
 	$items = get_all_items_in_cart();
 	$isLoggedIn = user_is_logged_in();

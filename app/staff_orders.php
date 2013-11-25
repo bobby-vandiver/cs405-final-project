@@ -2,7 +2,7 @@
 
 include 'bootstrap.php';
 
-    head("Chico's Toy Store");
+    head("Orders Lookup");
 ?>
 
 

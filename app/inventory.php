@@ -1,6 +1,6 @@
 <?php
     include 'bootstrap.php';
-    head("Chico's Toy Store");
+    head("Inventory View");
 ?>
 <body>
 
