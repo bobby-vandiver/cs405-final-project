@@ -6,7 +6,6 @@
     function display_login_or_welcome() {
         
         if(user_is_logged_in()) {
-            // TODO: Do this the right way
             echo "<li><a href=\"#\">Welcome back, " . $_SESSION['username'] . "</a></li>";
             echo "<li><a href=\"logout.php\">Logout</a></li>";
         }
@@ -17,7 +16,8 @@
 	
 	function display_customer_only_links() {
 		if(logged_in_user_is_customer()) {
-			echo "<li><a href=\"orders.php\">My Orders</a></li>";
+			echo "<li><a href=\"orders.php\">Orders</a></li>";
+		    echo "<li><a href=\"purchase.php\">Checkout</a></li>";
         }
 	}
 
@@ -52,7 +52,6 @@
                     <?php display_customer_only_links(); ?>
                     <?php display_staff_links(); ?>
 					<?php display_admin_links(); ?>
-					<li><a href="purchase.php">Checkout</a></li>
                     <?php display_login_or_welcome(); ?>
                </ul>
             </div><!--/.nav-collapse -->
