@@ -32,9 +32,11 @@
         <?php
             if(user_is_logged_in() && logged_in_user_is_customer()) {
                 $username = get_logged_in_user();
-                $recommended_items = get_recommended_items($username);
 
-                if(count($recommended_items) > 0) {
+                $recommended_items = get_recommended_items($username);
+                $item_count = mysqli_num_rows($recommended_items);
+
+                if($item_count > 0) {
                     echo "<h3>Recommended Items for You, $username.</h3>";
         ?>
 
