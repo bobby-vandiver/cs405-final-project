@@ -255,9 +255,9 @@
 	function lookup_max_isbn() {
 		$connection = create_connection();
 
-        $lookup_max_isbn_sql = "select max(isbn) from Items;";
+        $lookup_max_isbn_sql = "select max(cast(isbn as unsigned)) as isbn from Items;";
         $rows = mysqli_fetch_assoc(execute_query($connection, $lookup_max_isbn_sql));
-		$isbn = $rows['max(isbn)'];
+		$isbn = $rows['isbn'];
 		return $isbn;
 	}
 

@@ -8,7 +8,7 @@
 <body>
 
     <?php include 'navbar.php' ?>
-	<form class="form-horizontal" id="createForm" action="createItem.php" method="POST" enctype="application/x-www-form-urlencoded">
+	<form class="form-horizontal" id="createForm" onsubmit="validate()" action="createItem.php" method="POST" enctype="application/x-www-form-urlencoded">
 		<fieldset>
 		<!-- Form Name -->
 		<div class="row-fluid span4">
@@ -61,7 +61,7 @@
 			
 			<!-- Text input-->
 			<div class="control-group">
-			  <label class="control-label" for="name">Promotional Rate:</label>
+			  <label class="control-label" for="promo">Promotional Rate:</label>
 			  <div class="controls">
 				<input id="promo" name="promo" type="text" placeholder="Enter promotional rate" class="input-xlarge" required>			
 			  </div>
@@ -88,8 +88,29 @@
 				alert("Isbn number must be greater than "+lowestNewIsbn);
 			}
 		});
+		
+	function validate(event) {
+		if ($('#isbn').val().length > 10) {
+			alert("ISBNs are limited to 10 characters");
+			event.preventDefault();
+		}
+		else if (!$.isNumeric($('#qty').val())) {
+			alert("Please put a numeric value in the Quantity field");
+			event.preventDefault();
+		}
+		else if (!$.isNumeric($('#price').val())) {
+			alert("Please put a numeric value in the Price field");
+			event.preventDefault();
+		}
+		else if ($('#name').val().length > 50) {
+			alert("Names are limited to 50 characters");
+			event.preventDefault();
+		}
+		else if (!$.isNumeric($('#promo').val())) {
+			alert("Please put a numeric value in the Promotion field");
+			event.preventDefault();
+		}
+	}
 	</script>
-	
-	
 </body>
 </html>

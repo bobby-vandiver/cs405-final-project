@@ -15,7 +15,7 @@ include 'bootstrap.php';
 
         redirect_if_not_staff();
     ?>
-	<form class="form-horizontal" action="staff_order_lookup.php" method="POST" enctype="application/x-www-form-urlencoded"
+	<form class="form-horizontal" name=lookupForm" action="staff_order_lookup.php" onsubmit="validate()" method="POST" enctype="application/x-www-form-urlencoded">
 		<fieldset>
 		<!-- Form Name -->
 		<div class="row-fluid span12">
@@ -80,4 +80,24 @@ include 'bootstrap.php';
 
 		<?php include 'footer.php'; ?>
 </body>
+<script>
+	function validate(event) {
+		if ($('#orderID').val().length > 50) {
+			alert("Usernames are limited to 50 characters");
+			event.preventDefault();
+		}
+		else if (!$.isNumeric($('#orderID').val()) && $('#orderID').val().length > 0 ) {
+			alert("Please put a numeric value in the Order Number field");
+			event.preventDefault();
+		}
+		else if (!$.isNumeric($('#startDate').val()) && $('#startDate').val().length > 0 ) {
+			alert("Please put a numeric value in the Start Date field");
+			event.preventDefault();
+		}
+		else if (!$.isNumeric($('#endDate').val()) && $('#endDate').val().length > 0 ) {
+			alert("Please put a numeric value in the End Date field");
+			event.preventDefault();
+		}
+	}
+</script>
 </html>
