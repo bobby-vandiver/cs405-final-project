@@ -39,7 +39,10 @@
                 <form class="form-inline" role="form" id="add_to_cart_form">
                     <div class="form-group">
                         <input type="number" class="form-control" id="quantity_to_add" min="1" value="1">
+                    <?php
+                        if(user_is_logged_in()) { ?>
                         <button type="button" class="btn btn-default" type="submit" id="add_button">Add to Cart</button>
+                    <?php } ?>
                     </div>
                 </form>
             </div>
